@@ -7,5 +7,18 @@
 
 import Foundation
 
-print("Hello, World!")
+print("Hello, Advent of Code!")
+
+// testInput(filename: "00.input")
+
+
+private func testInput(filename: String) {
+	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
+
+	print(lines)
+
+	let groups = AOCUtil.readGroupedInputFile(named: filename)
+
+	print(groups)
+}
 
