@@ -38,7 +38,7 @@ struct SonarSweep {
 			sums.append(window.reduce(0, +))
 		}
 		chunkCount = sums.chunked(by: {$0 >= $1}).count
-		incCount = chunkCount - 1
+		incCount = chunkCount - 1 
 		
 		print("Part 2")
 		print("The number of increases is: \(incCount)\n")
