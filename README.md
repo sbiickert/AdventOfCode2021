@@ -6,3 +6,7 @@ It's time for the [Advent of Code](https://adventofcode.com/2021)! This year I'm
 The big challenge for me this year will be to learn the [swift-algorithms](https://github.com/apple/swift-algorithms) library. When I redid much of the [2020 Advent in C++98](https://github.com/sbiickert/AdventOfCode2020Classic) for fun last year, I learned a lot about the C++ STL and how to take advantage of it. I think this will be a great opportunity to dig into the Swift algorithms library.
 
 Waiting for December...
+
+## And We're Off!
+
+A good start at 10 pm MST on November 30th. Got to use swift-algorithms right off the bat. Super clean solution, let's hope it continues.
