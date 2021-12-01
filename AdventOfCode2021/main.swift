@@ -10,7 +10,9 @@ import Algorithms
 
 print("Hello, Advent of Code!")
 
-testInput(filename: "00.input")
+//testInput(filename: "00.input")
+
+SonarSweep.solve()
 
 
 private func testInput(filename: String) {
