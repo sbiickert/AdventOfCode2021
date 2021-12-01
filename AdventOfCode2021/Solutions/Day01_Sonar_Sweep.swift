@@ -20,14 +20,15 @@ struct SonarSweep {
 		var incCount = 0
 		
 		// Part 1 - Counting the depth measurements greater than the one before
-		// Using swift-algorithms chunked.
-		// chunked is making a break every time there is a decrease or no change
+		// Using swift-algorithms chunked. chunked is making a break every time there is an increase
 		var chunkCount = depths.chunked(by: { $0 >= $1 }).count
+		// [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+		//		=> [[199], [200], [208], [210, 200], [207], [240], [269, 260], [263]]
 		// Have to decrement because the first chunk is the first entry
 		incCount = chunkCount - 1
 		
 		print("Part 1")
-		print("The number of increases is: \(incCount)\n")
+		print("The number of increases is: \(incCount)")
 		
 		// Part 2 - Having a 3-digit sliding window instead of single values
 		// Sum the values in the sliding window to determine increase/decrease
@@ -41,7 +42,7 @@ struct SonarSweep {
 		incCount = chunkCount - 1 
 		
 		print("Part 2")
-		print("The number of increases is: \(incCount)\n")
+		print("The number of increases is: \(incCount)")
 	}
 }
 
