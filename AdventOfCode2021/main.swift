@@ -8,11 +8,12 @@
 import Foundation
 import Algorithms
 
-print("Hello, Advent of Code!")
-
+print("Advent of Code 2021")
 //testInput(filename: "00.input")
 
-SonarSweep.solve()
+// Day 01
+SonarSweep.solve(filename: "01.test")
+SonarSweep.solve(filename: "01.challenge")
 
 
 private func testInput(filename: String) {
