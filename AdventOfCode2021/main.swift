@@ -24,9 +24,7 @@ private func testInput(filename: String) {
 		print(combo)
 	}
 	
-
 	let groups = AOCUtil.readGroupedInputFile(named: filename)
-
 	print(groups)
 }
 
