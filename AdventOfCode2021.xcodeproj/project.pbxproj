@@ -10,6 +10,9 @@
 		370A4A8F2738312D00C003F9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A8E2738312D00C003F9 /* main.swift */; };
 		370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A95273831BA00C003F9 /* AoCUtil.swift */; };
 		374C4C3E274E9CF200B41733 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 374C4C3D274E9CF200B41733 /* Algorithms */; };
+		375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CCBB52759190D00AF40A1 /* Day02_Dive.swift */; };
+		375CCBB927591EAD00AF40A1 /* 02.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375CCBB72759197E00AF40A1 /* 02.test.txt */; };
+		375CCBBA27591EAD00AF40A1 /* 02.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375CCBB82759198100AF40A1 /* 02.challenge.txt */; };
 		37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */; };
 		37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C741BA27573B1600187596 /* 01.challenge.txt */; };
 		37DDEE642757D6DC0019BA66 /* 01.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37DDEE632757D63D0019BA66 /* 01.test.txt */; };
@@ -23,6 +26,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				375CCBB927591EAD00AF40A1 /* 02.test.txt in CopyFiles */,
+				375CCBBA27591EAD00AF40A1 /* 02.challenge.txt in CopyFiles */,
 				37DDEE642757D6DC0019BA66 /* 01.test.txt in CopyFiles */,
 				37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */,
 				37F399EB273B347E00DB97A4 /* 00.input.txt in CopyFiles */,
@@ -35,6 +40,9 @@
 		370A4A8B2738312D00C003F9 /* AdventOfCode2021 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2021; sourceTree = BUILT_PRODUCTS_DIR; };
 		370A4A8E2738312D00C003F9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		370A4A95273831BA00C003F9 /* AoCUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoCUtil.swift; sourceTree = "<group>"; };
+		375CCBB52759190D00AF40A1 /* Day02_Dive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02_Dive.swift; sourceTree = "<group>"; };
+		375CCBB72759197E00AF40A1 /* 02.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.test.txt; sourceTree = "<group>"; };
+		375CCBB82759198100AF40A1 /* 02.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.challenge.txt; sourceTree = "<group>"; };
 		37C741BA27573B1600187596 /* 01.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.challenge.txt; sourceTree = "<group>"; };
 		37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day01_Sonar_Sweep.swift; sourceTree = "<group>"; };
 		37DDEE632757D63D0019BA66 /* 01.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.test.txt; sourceTree = "<group>"; };
@@ -86,6 +94,8 @@
 				37F399EA273B338100DB97A4 /* 00.input.txt */,
 				37DDEE632757D63D0019BA66 /* 01.test.txt */,
 				37C741BA27573B1600187596 /* 01.challenge.txt */,
+				375CCBB72759197E00AF40A1 /* 02.test.txt */,
+				375CCBB82759198100AF40A1 /* 02.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -94,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */,
+				375CCBB52759190D00AF40A1 /* Day02_Dive.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -164,6 +175,7 @@
 			files = (
 				370A4A8F2738312D00C003F9 /* main.swift in Sources */,
 				37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */,
+				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
