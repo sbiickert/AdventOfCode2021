@@ -18,41 +18,36 @@ struct BinaryDiagnostic: AoCSolution {
 		print("Part 1")
 		print("The power consumption is: \(rates.gamma) * \(rates.epsilon) = \(rates.gamma * rates.epsilon)")
 		
-		let oxygen = calcOxygen(input: input)
-		let co2 = calcCO2(input: input)
-		
+		let oxygen = calcRating(.oxygen, input: input)
+		let co2 = calcRating(.co2, input: input)
+
 		print("Part 2")
 		print("The life support rating is: \(oxygen) * \(co2) = \(oxygen * co2)")
 	}
 	
-	static func calcOxygen(input: [String]) -> Int {
-		var mutableInput = input
-		var pos = 0
-		while mutableInput.count > 1 {
-			let x = getPositionCharacters(input: mutableInput, position: pos)
-			let counts = countOnesAndZeros(chArray: x)
-			let index = String.Index(utf16Offset: pos, in: input[0])
-			let mostCommon = counts.ones != counts.zeros ? counts.mostCommon : "1"
-			mutableInput = mutableInput.filter {$0[index] == Character(mostCommon)}
-			pos += 1
-		}
-		let oxygenStr = mutableInput.first!
-		return Int(oxygenStr, radix: 2) ?? 0
+	enum Rating {
+		case oxygen
+		case co2
 	}
 	
-	static func calcCO2(input: [String]) -> Int {
+	static func calcRating(_ rating: Rating, input: [String]) -> Int {
 		var mutableInput = input
 		var pos = 0
 		while mutableInput.count > 1 {
 			let x = getPositionCharacters(input: mutableInput, position: pos)
 			let counts = countOnesAndZeros(chArray: x)
 			let index = String.Index(utf16Offset: pos, in: input[0])
-			let leastCommon = counts.ones != counts.zeros ? counts.leastCommon : "0"
-			mutableInput = mutableInput.filter {$0[index] == Character(leastCommon)}
+			
+			// These two lines are the difference between oxygen and co2
+			let value = rating == .oxygen ? counts.mostCommon : counts.leastCommon
+			let defaultValue = rating == .oxygen ? "1" : "0"
+			
+			let resultValue = counts.ones != counts.zeros ? value : defaultValue
+			mutableInput = mutableInput.filter {$0[index] == Character(resultValue)}
 			pos += 1
 		}
-		let co2Str = mutableInput.first!
-		return Int(co2Str, radix: 2) ?? 0
+		let ratingStr = mutableInput.first!
+		return Int(ratingStr, radix: 2) ?? 0
 	}
 
 	static func calcGammaEpsilon(input: [String]) -> (gamma: Int, epsilon: Int) {
