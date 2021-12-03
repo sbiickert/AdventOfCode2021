@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol AoCSolution {
+	static func solve(filename: String)
+}
+
 class AOCUtil {
 	public static func readInputFile(named name:String, removingEmptyLines removeEmpty:Bool) -> [String] {
 		var results = [String]()

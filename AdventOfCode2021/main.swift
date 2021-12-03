@@ -16,8 +16,12 @@ print("Advent of Code 2021")
 //SonarSweep.solve(filename: "01.challenge")
 
 // Day 02
-Dive.solve(filename: "02.test")
-Dive.solve(filename: "02.challenge")
+//Dive.solve(filename: "02.test")
+//Dive.solve(filename: "02.challenge")
+
+// Day 03
+//BinaryDiagnostic.solve(filename: "03.test")
+BinaryDiagnostic.solve(filename: "03.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

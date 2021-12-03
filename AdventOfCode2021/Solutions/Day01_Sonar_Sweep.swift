@@ -9,7 +9,7 @@
 import Foundation
 import Algorithms
 
-struct SonarSweep {
+struct SonarSweep: AoCSolution {
 	static func solve(filename: String) {
 		print("\nDay 01 (Sonar Sweep) -> \(filename)")
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

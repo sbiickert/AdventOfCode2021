@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Dive {
+struct Dive: AoCSolution {
 	enum Command: String, CaseIterable {
 		case fwd = "forward"
 		case up  = "up"
