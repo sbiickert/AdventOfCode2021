@@ -24,7 +24,7 @@ print("Advent of Code 2021")
 //BinaryDiagnostic.solve(filename: "03.challenge")
 
 // Day 04
-//GiantSquid.solve(filename: "04.test")
+GiantSquid.solve(filename: "04.test")
 GiantSquid.solve(filename: "04.challenge")
 
 private func testInput(filename: String) {
