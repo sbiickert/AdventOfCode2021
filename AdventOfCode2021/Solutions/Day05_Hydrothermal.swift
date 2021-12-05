@@ -1,6 +1,7 @@
 //
 //  Day05_Hydrothermal.swift
 //  AdventOfCode2021
+//  https://adventofcode.com/2021/day/5
 //
 //  Created by Simon Biickert on 2021-12-05.
 //
@@ -16,14 +17,14 @@ struct Hydrothermal: AoCSolution {
 		let map = Map()
 		input.forEach({map.add(line: Line($0))})
 		map.render()
-		//map.draw()
+		if map.bounds!.w < 20 { map.draw() }
 		
 		print("Part 1")
 		print("The number of danger zones is: \(map.dangerZoneCount)")
 
 		map.render(includeDiagonals: true)
-		//map.draw()
-		
+		if map.bounds!.w < 20 { map.draw() }
+
 		print("Part 2")
 		print("The number of danger zones is: \(map.dangerZoneCount)")
 	}
