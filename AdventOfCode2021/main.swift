@@ -24,8 +24,12 @@ print("Advent of Code 2021")
 //BinaryDiagnostic.solve(filename: "03.challenge")
 
 // Day 04
-GiantSquid.solve(filename: "04.test")
-GiantSquid.solve(filename: "04.challenge")
+//GiantSquid.solve(filename: "04.test")
+//GiantSquid.solve(filename: "04.challenge")
+
+// Day 05
+//Hydrothermal.solve(filename: "05.test")
+Hydrothermal.solve(filename: "05.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

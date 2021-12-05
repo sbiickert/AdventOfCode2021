@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		370A4A8F2738312D00C003F9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A8E2738312D00C003F9 /* main.swift */; };
 		370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A95273831BA00C003F9 /* AoCUtil.swift */; };
+		37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */; };
+		37172195275CF427006DCCE4 /* 05.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172193275CF3DB006DCCE4 /* 05.test.txt */; };
+		37172196275CF427006DCCE4 /* 05.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172194275CF400006DCCE4 /* 05.challenge.txt */; };
 		374C4C3E274E9CF200B41733 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 374C4C3D274E9CF200B41733 /* Algorithms */; };
 		375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CCBB52759190D00AF40A1 /* Day02_Dive.swift */; };
 		375CCBB927591EAD00AF40A1 /* 02.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375CCBB72759197E00AF40A1 /* 02.test.txt */; };
@@ -32,6 +35,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37172195275CF427006DCCE4 /* 05.test.txt in CopyFiles */,
+				37172196275CF427006DCCE4 /* 05.challenge.txt in CopyFiles */,
 				37FC44F6275BB863009AB2E1 /* 04.test.txt in CopyFiles */,
 				37FC44F7275BB863009AB2E1 /* 04.challenge.txt in CopyFiles */,
 				3794F22C275A7E68009C029B /* 03.test.txt in CopyFiles */,
@@ -50,6 +55,9 @@
 		370A4A8B2738312D00C003F9 /* AdventOfCode2021 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2021; sourceTree = BUILT_PRODUCTS_DIR; };
 		370A4A8E2738312D00C003F9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		370A4A95273831BA00C003F9 /* AoCUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoCUtil.swift; sourceTree = "<group>"; };
+		37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day05_Hydrothermal.swift; sourceTree = "<group>"; };
+		37172193275CF3DB006DCCE4 /* 05.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.test.txt; sourceTree = "<group>"; };
+		37172194275CF400006DCCE4 /* 05.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.challenge.txt; sourceTree = "<group>"; };
 		375CCBB52759190D00AF40A1 /* Day02_Dive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02_Dive.swift; sourceTree = "<group>"; };
 		375CCBB72759197E00AF40A1 /* 02.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.test.txt; sourceTree = "<group>"; };
 		375CCBB82759198100AF40A1 /* 02.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.challenge.txt; sourceTree = "<group>"; };
@@ -116,6 +124,8 @@
 				3794F22B275A7891009C029B /* 03.challenge.txt */,
 				37FC44F4275BB815009AB2E1 /* 04.test.txt */,
 				37FC44F5275BB82B009AB2E1 /* 04.challenge.txt */,
+				37172193275CF3DB006DCCE4 /* 05.test.txt */,
+				37172194275CF400006DCCE4 /* 05.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -127,6 +137,7 @@
 				375CCBB52759190D00AF40A1 /* Day02_Dive.swift */,
 				3794F226275A776F009C029B /* Day03_BinaryDiagnostic.swift */,
 				37FC44F2275BB73B009AB2E1 /* Day04_GiantSquid.swift */,
+				37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -197,6 +208,7 @@
 			files = (
 				370A4A8F2738312D00C003F9 /* main.swift in Sources */,
 				37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */,
+				37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */,
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
 				3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
