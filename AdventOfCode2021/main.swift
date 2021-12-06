@@ -28,8 +28,12 @@ print("Advent of Code 2021")
 //GiantSquid.solve(filename: "04.challenge")
 
 // Day 05
-Hydrothermal.solve(filename: "05.test")
-Hydrothermal.solve(filename: "05.challenge")
+//Hydrothermal.solve(filename: "05.test")
+//Hydrothermal.solve(filename: "05.challenge")
+
+// Day 06
+//LanternFish.solve(filename: "06.test")
+LanternFish.solve(filename: "06.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
