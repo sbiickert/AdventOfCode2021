@@ -33,7 +33,11 @@ print("Advent of Code 2021")
 
 // Day 06
 //LanternFish.solve(filename: "06.test")
-LanternFish.solve(filename: "06.challenge")
+//LanternFish.solve(filename: "06.challenge")
+
+// Day 07
+//TreacheryOfWhales.solve(filename: "07.test")
+TreacheryOfWhales.solve(filename: "07.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
