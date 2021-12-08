@@ -40,6 +40,7 @@ print("Advent of Code 2021")
 //TreacheryOfWhales.solve(filename: "07.challenge")
 
 // Day 08
+//SevenSegmentSearch.solve(filename: "08.single")
 //SevenSegmentSearch.solve(filename: "08.test")
 SevenSegmentSearch.solve(filename: "08.challenge")
 
