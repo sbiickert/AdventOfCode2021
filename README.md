@@ -16,3 +16,7 @@ A good start at 10 pm MST on November 30th. Got to use swift-algorithms right of
 So far, so good. The difficulty seems to be ramping up gradually this year. The first four days were very straightforward and I spent equally as much time refining my solutions after getting the gold stars as I spent on the solutions. The swift-algorithms functions are coming in handy, and I'm loving it. I'm staying away from regex for parsing the input files. I learned last year in C++98 that you don't really need them.
 
 The *really* fun thing, though, is that I've got a side project re-solving the puzzles in [Free Pascal](https://freepascal.org) on a Raspberry Pi. I can't promise I'll solve all of the puzzles, but I'm surprised myself so far.
+
+## Do I Get Extra Credit?
+
+I have uploaded copies of my Pascal solutions for days 1-4. It might not last, but I started going back and re-solving the puzzles by SSH'ing into a Raspberry Pi 4 and using the Free Pascal text IDE. It's a real challenge... It's an amazing contrast between the ultra-modern and the 30-year-old technology.
