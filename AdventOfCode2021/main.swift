@@ -46,7 +46,11 @@ print("Advent of Code 2021")
 
 // Day 09
 //SmokeBasin.solve(filename: "09.test")
-SmokeBasin.solve(filename: "09.challenge")
+//SmokeBasin.solve(filename: "09.challenge")
+
+// Day 10
+//SyntaxScoring.solve(filename: "10.test")
+SyntaxScoring.solve(filename: "10.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

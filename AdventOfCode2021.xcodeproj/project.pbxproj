@@ -28,6 +28,9 @@
 		379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379FF260275E532F00C279A1 /* Day06_LanternFish.swift */; };
 		379FF264275E539700C279A1 /* 06.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 379FF262275E535C00C279A1 /* 06.test.txt */; };
 		379FF265275E539700C279A1 /* 06.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 379FF263275E536B00C279A1 /* 06.challenge.txt */; };
+		37AA2AC02763A05A0076F6F5 /* Day10_SyntaxScoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */; };
+		37AA2AC32763A09D0076F6F5 /* 10.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC12763A0840076F6F5 /* 10.test.txt */; };
+		37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC22763A0930076F6F5 /* 10.challenge.txt */; };
 		37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */; };
 		37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C741BA27573B1600187596 /* 01.challenge.txt */; };
 		37D515D62760F13C00FE040C /* Day08_SevenSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */; };
@@ -48,6 +51,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37AA2AC32763A09D0076F6F5 /* 10.test.txt in CopyFiles */,
+				37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */,
 				3739F9AD276243F200114F89 /* 09.test.txt in CopyFiles */,
 				3739F9AE276243F200114F89 /* 09.challenge.txt in CopyFiles */,
 				37F488E927613F9F00B39D86 /* 08.single.txt in CopyFiles */,
@@ -95,6 +100,9 @@
 		379FF260275E532F00C279A1 /* Day06_LanternFish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day06_LanternFish.swift; sourceTree = "<group>"; };
 		379FF262275E535C00C279A1 /* 06.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 06.test.txt; sourceTree = "<group>"; };
 		379FF263275E536B00C279A1 /* 06.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 06.challenge.txt; sourceTree = "<group>"; };
+		37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10_SyntaxScoring.swift; sourceTree = "<group>"; };
+		37AA2AC12763A0840076F6F5 /* 10.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.test.txt; sourceTree = "<group>"; };
+		37AA2AC22763A0930076F6F5 /* 10.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.challenge.txt; sourceTree = "<group>"; };
 		37C741BA27573B1600187596 /* 01.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.challenge.txt; sourceTree = "<group>"; };
 		37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day01_Sonar_Sweep.swift; sourceTree = "<group>"; };
 		37D515D32760F11800FE040C /* 08.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.test.txt; sourceTree = "<group>"; };
@@ -170,6 +178,8 @@
 				37F488E827613F9000B39D86 /* 08.single.txt */,
 				3739F9AB276243AC00114F89 /* 09.test.txt */,
 				3739F9AC276243BF00114F89 /* 09.challenge.txt */,
+				37AA2AC12763A0840076F6F5 /* 10.test.txt */,
+				37AA2AC22763A0930076F6F5 /* 10.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -186,6 +196,7 @@
 				375888E2275FB74500047DEA /* Day07_TreacheryOfWhales.swift */,
 				37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */,
 				3739F9A92762438900114F89 /* Day09_SmokeBasin.swift */,
+				37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -264,6 +275,7 @@
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
 				3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
+				37AA2AC02763A05A0076F6F5 /* Day10_SyntaxScoring.swift in Sources */,
 				37FC44F3275BB73B009AB2E1 /* Day04_GiantSquid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
