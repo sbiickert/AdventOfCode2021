@@ -20,3 +20,11 @@ The *really* fun thing, though, is that I've got a side project re-solving the p
 ## Do I Get Extra Credit?
 
 I have uploaded copies of my Pascal solutions for days 1-4. It might not last, but I started going back and re-solving the puzzles by SSH'ing into a Raspberry Pi 4 and using the Free Pascal text IDE. It's a real challenge... It's an amazing contrast between the ultra-modern and the 30-year-old technology.
+
+## Ten Days In
+
+For a short while, I thought that day 8, part 2 (Seven Segment) was going to force me to go looking for other solutions, but I persevered. Not pretty code, but it works. Today's (Syntax) with the matching braces was a twofer victory:
+
+1. I solved Part One on the first try. First run of the code. I've never done that before. <mic drop>
+2. The Part One solution actually resulted in me having the Part Two solution ready to go. I just needed to reverse the collection and score it.
+ 
