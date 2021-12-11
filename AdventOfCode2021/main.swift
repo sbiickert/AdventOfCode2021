@@ -50,7 +50,11 @@ print("Advent of Code 2021")
 
 // Day 10
 //SyntaxScoring.solve(filename: "10.test")
-SyntaxScoring.solve(filename: "10.challenge")
+//SyntaxScoring.solve(filename: "10.challenge")
+
+// Day 11
+//DumboOctopus.solve(filename: "11.test")
+DumboOctopus.solve(filename: "11.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

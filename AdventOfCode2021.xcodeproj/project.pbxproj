@@ -12,6 +12,9 @@
 		37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */; };
 		37172195275CF427006DCCE4 /* 05.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172193275CF3DB006DCCE4 /* 05.test.txt */; };
 		37172196275CF427006DCCE4 /* 05.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172194275CF400006DCCE4 /* 05.challenge.txt */; };
+		3735B80A2764E331006F4AD1 /* Day11_DumboOctopus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3735B8092764E331006F4AD1 /* Day11_DumboOctopus.swift */; };
+		3735B80D2764E71A006F4AD1 /* 11.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3735B80B2764E353006F4AD1 /* 11.test.txt */; };
+		3735B80E2764E71A006F4AD1 /* 11.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3735B80C2764E369006F4AD1 /* 11.challenge.txt */; };
 		3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3739F9A92762438900114F89 /* Day09_SmokeBasin.swift */; };
 		3739F9AD276243F200114F89 /* 09.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3739F9AB276243AC00114F89 /* 09.test.txt */; };
 		3739F9AE276243F200114F89 /* 09.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3739F9AC276243BF00114F89 /* 09.challenge.txt */; };
@@ -51,6 +54,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				3735B80D2764E71A006F4AD1 /* 11.test.txt in CopyFiles */,
+				3735B80E2764E71A006F4AD1 /* 11.challenge.txt in CopyFiles */,
 				37AA2AC32763A09D0076F6F5 /* 10.test.txt in CopyFiles */,
 				37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */,
 				3739F9AD276243F200114F89 /* 09.test.txt in CopyFiles */,
@@ -85,6 +90,9 @@
 		37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day05_Hydrothermal.swift; sourceTree = "<group>"; };
 		37172193275CF3DB006DCCE4 /* 05.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.test.txt; sourceTree = "<group>"; };
 		37172194275CF400006DCCE4 /* 05.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.challenge.txt; sourceTree = "<group>"; };
+		3735B8092764E331006F4AD1 /* Day11_DumboOctopus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11_DumboOctopus.swift; sourceTree = "<group>"; };
+		3735B80B2764E353006F4AD1 /* 11.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 11.test.txt; sourceTree = "<group>"; };
+		3735B80C2764E369006F4AD1 /* 11.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 11.challenge.txt; sourceTree = "<group>"; };
 		3739F9A92762438900114F89 /* Day09_SmokeBasin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day09_SmokeBasin.swift; sourceTree = "<group>"; };
 		3739F9AB276243AC00114F89 /* 09.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 09.test.txt; sourceTree = "<group>"; };
 		3739F9AC276243BF00114F89 /* 09.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 09.challenge.txt; sourceTree = "<group>"; };
@@ -180,6 +188,8 @@
 				3739F9AC276243BF00114F89 /* 09.challenge.txt */,
 				37AA2AC12763A0840076F6F5 /* 10.test.txt */,
 				37AA2AC22763A0930076F6F5 /* 10.challenge.txt */,
+				3735B80B2764E353006F4AD1 /* 11.test.txt */,
+				3735B80C2764E369006F4AD1 /* 11.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -197,6 +207,7 @@
 				37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */,
 				3739F9A92762438900114F89 /* Day09_SmokeBasin.swift */,
 				37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */,
+				3735B8092764E331006F4AD1 /* Day11_DumboOctopus.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -273,6 +284,7 @@
 				3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */,
 				379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */,
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
+				3735B80A2764E331006F4AD1 /* Day11_DumboOctopus.swift in Sources */,
 				3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
 				37AA2AC02763A05A0076F6F5 /* Day10_SyntaxScoring.swift in Sources */,
