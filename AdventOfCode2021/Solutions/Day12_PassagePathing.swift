@@ -16,36 +16,63 @@ struct PassagePathing: AoCSolution {
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 
 		let start = parseCaveSystem(input)
-		findAllPaths(start: start)
+		findAllPaths(start: start, maxAllowedSmall: 0)
 		//for (index, path) in _allPaths.enumerated() {
 		//	print("\(index): \(path.map({$0.label}).joined(separator: "->"))")
 		//}
 		
 		print("Part 1")
 		print("The total number of paths is: \(_allPaths.count)")
+		
+		findAllPaths(start: start, maxAllowedSmall: 1)
+		//for (index, path) in _allPaths.enumerated() {
+		//	print("\(index): \(path.map({$0.label}).joined(separator: "->"))")
+		//}
+		
+		print("Part 2")
+		print("The total number of paths is: \(_allPaths.count)")
 	}
 	
 	static var _allPaths = [[Cave]]()
-	static func findAllPaths(start: Cave) {
+	static func findAllPaths(start: Cave, maxAllowedSmall: Int) {
 		_allPaths.removeAll()
 		let path = [start]
-		findPath(c: start, path: path)
+		findPath(c: start, path: path, maxAllowedSmall: maxAllowedSmall)
 	}
 	
-	static func findPath(c: Cave, path immutable: [Cave]) {
+	static func findPath(c: Cave, path immutable: [Cave], maxAllowedSmall: Int) {
 		for conn in c.connected {
-			var path = immutable
-			if conn.type == .large || path.contains(conn) == false {
-				// Can only re-enter large caves
+			
+			let isLarge = conn.type == .large
+			//let isSmallUnderLimit = conn.type == .small && (countSmallDoubles(in: immutable) < maxAllowedSmall)
+			let isNotInPath = immutable.contains(conn) == false
+			let canEnterCave = isLarge || isNotInPath || (conn.type == .small && (countSmallDoubles(in: immutable) < maxAllowedSmall))
+
+			if canEnterCave {
+				var path = immutable
 				path.append(conn)
 				if conn.type == .end {
 					_allPaths.append(path)
 				}
-				findPath(c: conn, path: path)
+				findPath(c: conn, path: path, maxAllowedSmall: maxAllowedSmall)
 			}
 		}
 	}
 	
+	/* TODO: this is slow. Setting dictionary keys, filtering. */
+	static func countSmallDoubles(in path: [Cave]) -> Int {
+		let smalls = path.filter({$0.type == .small})
+		var counts = Dictionary<Cave, Int>()
+		for s in smalls {
+			if counts.keys.contains(s) == false {
+				counts[s] = 0
+			}
+			counts[s]! += 1
+		}
+		let doubles = counts.filter({$0.value > 1})
+		return doubles.count
+	}
+
 	static func parseCaveSystem(_ input: [String]) -> Cave {
 		var allCaves = Dictionary<String, Cave>()
 		for line in input {
@@ -63,7 +90,7 @@ struct PassagePathing: AoCSolution {
 		return start
 	}
 	
-	class Cave: Equatable {
+	class Cave: Equatable, Hashable {
 		let label: String
 		let type: CaveType
 		var connected = [Cave]()
@@ -84,6 +111,9 @@ struct PassagePathing: AoCSolution {
 		}
 		static func != (lhs: Cave, rhs: Cave) -> Bool {
 			return lhs.label != rhs.label
+		}
+		func hash(into hasher: inout Hasher) {
+			hasher.combine(label)
 		}
 	}
 	
