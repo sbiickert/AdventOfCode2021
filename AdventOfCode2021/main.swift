@@ -60,7 +60,11 @@ print("Advent of Code 2021")
 //PassagePathing.solve(filename: "12.test1")
 //PassagePathing.solve(filename: "12.test2")
 //PassagePathing.solve(filename: "12.test3")
-PassagePathing.solve(filename: "12.challenge")
+//PassagePathing.solve(filename: "12.challenge")
+
+// Day 13
+//TransparentOrigami.solve(filename: "13.test")
+TransparentOrigami.solve(filename: "13.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
