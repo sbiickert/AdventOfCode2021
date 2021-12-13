@@ -64,7 +64,7 @@ print("Advent of Code 2021")
 
 // Day 13
 //TransparentOrigami.solve(filename: "13.test")
-TransparentOrigami.solve(filename: "13.challenge")
+//TransparentOrigami.solve(filename: "13.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

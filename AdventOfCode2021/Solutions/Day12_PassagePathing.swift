@@ -16,7 +16,7 @@ struct PassagePathing: AoCSolution {
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 
 		let start = parseCaveSystem(input)
-		findAllPaths(start: start, maxAllowedSmall: 0)
+		findAllPaths(start: start, allowDoubleSmall: false)
 		//for (index, path) in _allPaths.enumerated() {
 		//	print("\(index): \(path.map({$0.label}).joined(separator: "->"))")
 		//}
@@ -24,7 +24,7 @@ struct PassagePathing: AoCSolution {
 		print("Part 1")
 		print("The total number of paths is: \(_allPaths.count)")
 		
-		findAllPaths(start: start, maxAllowedSmall: 1)
+		findAllPaths(start: start, allowDoubleSmall: true)
 		//for (index, path) in _allPaths.enumerated() {
 		//	print("\(index): \(path.map({$0.label}).joined(separator: "->"))")
 		//}
@@ -34,43 +34,32 @@ struct PassagePathing: AoCSolution {
 	}
 	
 	static var _allPaths = [[Cave]]()
-	static func findAllPaths(start: Cave, maxAllowedSmall: Int) {
+	static func findAllPaths(start: Cave, allowDoubleSmall: Bool) {
 		_allPaths.removeAll()
 		let path = [start]
-		findPath(c: start, path: path, maxAllowedSmall: maxAllowedSmall)
+		findPath(c: start, path: path, allowDoubleSmall: allowDoubleSmall)
 	}
 	
-	static func findPath(c: Cave, path immutable: [Cave], maxAllowedSmall: Int) {
+	static func findPath(c: Cave, path immutable: [Cave], allowDoubleSmall: Bool) {
 		for conn in c.connected {
 			
 			let isLarge = conn.type == .large
-			//let isSmallUnderLimit = conn.type == .small && (countSmallDoubles(in: immutable) < maxAllowedSmall)
 			let isNotInPath = immutable.contains(conn) == false
-			let canEnterCave = isLarge || isNotInPath || (conn.type == .small && (countSmallDoubles(in: immutable) < maxAllowedSmall))
+			let canEnterCave = isLarge || isNotInPath || (conn.type == .small && allowDoubleSmall)
 
 			if canEnterCave {
+				var allow = allowDoubleSmall
+				if allow && conn.type == .small && immutable.contains(conn) {
+					allow = false;
+				}
 				var path = immutable
 				path.append(conn)
 				if conn.type == .end {
 					_allPaths.append(path)
 				}
-				findPath(c: conn, path: path, maxAllowedSmall: maxAllowedSmall)
+				findPath(c: conn, path: path, allowDoubleSmall: allow)
 			}
 		}
-	}
-	
-	/* TODO: this is slow. Setting dictionary keys, filtering. */
-	static func countSmallDoubles(in path: [Cave]) -> Int {
-		let smalls = path.filter({$0.type == .small})
-		var counts = Dictionary<Cave, Int>()
-		for s in smalls {
-			if counts.keys.contains(s) == false {
-				counts[s] = 0
-			}
-			counts[s]! += 1
-		}
-		let doubles = counts.filter({$0.value > 1})
-		return doubles.count
 	}
 
 	static func parseCaveSystem(_ input: [String]) -> Cave {
