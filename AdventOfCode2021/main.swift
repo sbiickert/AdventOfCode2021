@@ -68,7 +68,7 @@ print("Advent of Code 2021")
 
 // Day 14
 //ExtendedPolymerization.solve(filename: "14.test")
-ExtendedPolymerization.solve(filename: "14.challenge")
+//ExtendedPolymerization.solve(filename: "14.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
