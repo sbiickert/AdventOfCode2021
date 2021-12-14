@@ -28,3 +28,6 @@ For a short while, I thought that day 8, part 2 (Seven Segment) was going to for
 1. I solved Part One on the first try. First run of the code. I've never done that before. <mic drop>
 2. The Part One solution actually resulted in me having the Part Two solution ready to go. I just needed to reverse the collection and score it.
  
+## Day 14: First Fail
+
+Today was the first day where I had to go to Reddit to see how Part 2 was done. I knew when I started that an iterative approach was going to hit the wall when building the polymer, but when part 1 finished fast I had hope. I tried re-writing as a recursion, but it was even worse. I played with optimizing, but it wasn't going to help. It turned out the answer was a lot like the lanternfish, but I couldn't see it until I was shown.
