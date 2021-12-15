@@ -9,6 +9,7 @@
 //
 
 import Foundation
+import Algorithms
 
 struct Chiton: AoCSolution {
 	static func solve(filename: String) {
@@ -124,9 +125,10 @@ struct Chiton: AoCSolution {
 			}
 			
 			// Get the unvisited node with lowest tentative cost
-			let temp = [Node](working.sorted(by: {$0.tentativeCost < $1.tentativeCost}))
-			if temp.first != nil {
-				currentNode = temp.first!
+			//let temp = [Node](working.sorted(by: {$0.tentativeCost < $1.tentativeCost}))
+			let temp = working.min(by: {$0.tentativeCost < $1.tentativeCost}) // This is much faster
+			if temp != nil {
+				currentNode = temp!
 			}
 		}
 		
