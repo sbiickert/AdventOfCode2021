@@ -81,7 +81,7 @@ print("Advent of Code 2021")
 
 // Day 17
 //TrickShot.solve(filename: "17.test")
-TrickShot.solve(filename: "17.challenge")
+//TrickShot.solve(filename: "17.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
