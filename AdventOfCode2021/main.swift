@@ -79,6 +79,9 @@ print("Advent of Code 2021")
 //PacketDecoder.solve(filename: "16.test2")
 //PacketDecoder.solve(filename: "16.challenge")
 
+// Day 17
+//TrickShot.solve(filename: "17.test")
+TrickShot.solve(filename: "17.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

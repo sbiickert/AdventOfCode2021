@@ -9,7 +9,7 @@ import Foundation
 
 struct PacketDecoder: AoCSolution {
 	static func solve(filename: String) {
-		print("\nDay 15 (Chiton) -> \(filename)")
+		print("\nDay 16 (Packet Decoder) -> \(filename)")
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 		
 		var packet: Packet

@@ -40,6 +40,8 @@
 		37778B5827678E2C0011DBB1 /* Day13_Origami.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37778B5727678E2C0011DBB1 /* Day13_Origami.swift */; };
 		37778B5B27678EA70011DBB1 /* 13.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37778B5927678E5D0011DBB1 /* 13.test.txt */; };
 		37778B5C27678EA70011DBB1 /* 13.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37778B5A27678E6E0011DBB1 /* 13.challenge.txt */; };
+		378952F3276CD32400AA2145 /* 17.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD2276C5D480086DF69 /* 17.test.txt */; };
+		378952F4276CD32400AA2145 /* 17.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD3276C5D550086DF69 /* 17.challenge.txt */; };
 		3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3794F226275A776F009C029B /* Day03_BinaryDiagnostic.swift */; };
 		3794F22C275A7E68009C029B /* 03.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3794F22A275A7882009C029B /* 03.test.txt */; };
 		3794F22D275A7E68009C029B /* 03.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3794F22B275A7891009C029B /* 03.challenge.txt */; };
@@ -50,6 +52,7 @@
 		37AA2AC32763A09D0076F6F5 /* 10.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC12763A0840076F6F5 /* 10.test.txt */; };
 		37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC22763A0930076F6F5 /* 10.challenge.txt */; };
 		37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD0276C55180086DF69 /* 16.test2.txt */; };
+		37AF9BD5276C5D660086DF69 /* Day17_TrickShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */; };
 		37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */; };
 		37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C741BA27573B1600187596 /* 01.challenge.txt */; };
 		37D515D62760F13C00FE040C /* Day08_SevenSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */; };
@@ -72,6 +75,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				378952F3276CD32400AA2145 /* 17.test.txt in CopyFiles */,
+				378952F4276CD32400AA2145 /* 17.challenge.txt in CopyFiles */,
 				37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */,
 				375A0311276B7ECD00011480 /* 16.test1.txt in CopyFiles */,
 				375A0312276B7ECD00011480 /* 16.challenge.txt in CopyFiles */,
@@ -160,6 +165,9 @@
 		37AA2AC12763A0840076F6F5 /* 10.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.test.txt; sourceTree = "<group>"; };
 		37AA2AC22763A0930076F6F5 /* 10.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.challenge.txt; sourceTree = "<group>"; };
 		37AF9BD0276C55180086DF69 /* 16.test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 16.test2.txt; sourceTree = "<group>"; };
+		37AF9BD2276C5D480086DF69 /* 17.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 17.test.txt; sourceTree = "<group>"; };
+		37AF9BD3276C5D550086DF69 /* 17.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 17.challenge.txt; sourceTree = "<group>"; };
+		37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day17_TrickShot.swift; sourceTree = "<group>"; };
 		37C741BA27573B1600187596 /* 01.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.challenge.txt; sourceTree = "<group>"; };
 		37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day01_Sonar_Sweep.swift; sourceTree = "<group>"; };
 		37D515D32760F11800FE040C /* 08.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.test.txt; sourceTree = "<group>"; };
@@ -252,6 +260,8 @@
 				375A030F276B7E3D00011480 /* 16.test1.txt */,
 				37AF9BD0276C55180086DF69 /* 16.test2.txt */,
 				375A0310276B7E4800011480 /* 16.challenge.txt */,
+				37AF9BD2276C5D480086DF69 /* 17.test.txt */,
+				37AF9BD3276C5D550086DF69 /* 17.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -275,6 +285,7 @@
 				3732F17F2768698300CCE8D4 /* Day14_Polymerization.swift */,
 				37725699276A2DDD004BA82C /* Day15_Chiton.swift */,
 				375A030D276B7E2D00011480 /* Day16_PacketDecoder.swift */,
+				37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -353,6 +364,7 @@
 				3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */,
 				379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */,
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
+				37AF9BD5276C5D660086DF69 /* Day17_TrickShot.swift in Sources */,
 				3735B80A2764E331006F4AD1 /* Day11_DumboOctopus.swift in Sources */,
 				3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
