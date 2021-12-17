@@ -12,10 +12,24 @@ struct PacketDecoder: AoCSolution {
 		print("\nDay 15 (Chiton) -> \(filename)")
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 		
-		let sumOfVersions = solvePartOne(input)
-
-		print("Part 1")
-		print("The sum of the packet version numbers is: \(sumOfVersions)")
+		var packet: Packet
+		for line in input {
+			binaryData = hexToBinary(line)
+			let head = readHead()
+			if head.type == .literal {
+				packet = ValuePacket(version: head.vers)
+			}
+			else {
+				packet = OperatorPacket(version: head.vers, type: head.type)
+			}
+			print("\nPacket \(line)")
+			//printPacket(packet, indent: 0)
+			let sumForPacket = packet.sumVersions
+			print("Part One")
+			print("Sum of versions in packet: \(sumForPacket)")
+			print("Part Two")
+			print("Value of packet: \(packet.value)")
+		}
 	}
 	
 	static var binaryData = ""
@@ -40,37 +54,11 @@ struct PacketDecoder: AoCSolution {
 		let type = PacketType(rawValue: typeID) ?? PacketType.other
 		return (version, type)
 	}
-
-	static func solvePartOne(_ input: [String]) -> Int {
-		var result = 0
-		var packet: Packet
-		for line in input {
-			binaryData = hexToBinary(line)
-			let head = readHead()
-			if head.type == .literal {
-				packet = ValuePacket(version: head.vers)
-			}
-			else {
-				packet = OperatorPacket(version: head.vers)
-			}
-			print("\nPacket \(line)")
-			printPacket(packet, indent: 0)
-			let sumForPacket = packet.sumVersions
-			print("Sum of versions in packet: \(sumForPacket)")
-			result += sumForPacket
-		}
-		return result
-	}
-	
-	enum PacketType: Int {
-		case literal = 4
-		case other = 0
-	}
 	
 	static func printPacket(_ p: Packet, indent: Int) {
 		var pad = ""
 		for _ in 0..<indent { pad += "  "}
-		print("\(pad)version: \(p.version)")
+		print("\(pad)version: \(p.version) type: \(p.type)")
 		if let vp = p as? ValuePacket {
 			print("\(pad)--> value: \(vp.value)")
 		}
@@ -103,11 +91,27 @@ struct PacketDecoder: AoCSolution {
 	}
 }
 
+enum PacketType: Int {
+	case sum = 0
+	case product = 1
+	case minimum = 2
+	case maximum = 3
+	case literal = 4
+	case greaterthan = 5
+	case lessthan = 6
+	case equalto = 7
+
+	case other = -1
+}
+
 class Packet {
 	let version: Int
-	
+	var type: PacketType
+	var value: Int = -1
+
 	init(version: Int) {
 		self.version = version
+		self.type = .other
 	}
 	
 	var sumVersions: Int {
@@ -116,10 +120,9 @@ class Packet {
 }
 
 class ValuePacket: Packet {
-	var value: Int = -1
-	
 	override init(version: Int) {
 		super.init(version: version)
+		self.type = .literal
 		readValue()
 	}
 	
@@ -138,8 +141,9 @@ class ValuePacket: Packet {
 class OperatorPacket: Packet {
 	var subpackets = [Packet]()
 	
-	override init(version: Int) {
+	init(version: Int, type: PacketType) {
 		super.init(version: version)
+		self.type = type
 		readSubpackets()
 	}
 	
@@ -157,7 +161,7 @@ class OperatorPacket: Packet {
 					subpackets.append(subpacket)
 				}
 				else {
-					let subpacket = OperatorPacket(version: head.vers)
+					let subpacket = OperatorPacket(version: head.vers, type: head.type)
 					subpackets.append(subpacket)
 				}
 			}
@@ -170,7 +174,7 @@ class OperatorPacket: Packet {
 					subpackets.append(subpacket)
 				}
 				else {
-					let subpacket = OperatorPacket(version: head.vers)
+					let subpacket = OperatorPacket(version: head.vers, type: head.type)
 					subpackets.append(subpacket)
 				}
 			}
@@ -183,6 +187,41 @@ class OperatorPacket: Packet {
 			sum += sp.sumVersions
 		}
 		return sum
+	}
+	
+	override var value: Int {
+		get {
+			var result = 0
+			
+			switch type {
+			case .sum:
+				subpackets.forEach({result += $0.value})
+			case .product:
+				result = 1
+				subpackets.forEach({result *= $0.value})
+			case .minimum:
+				result = subpackets.min(by: {$0.value < $1.value})!.value
+			case .maximum:
+				result = subpackets.max(by: {$0.value < $1.value})!.value
+			case .greaterthan:
+				if subpackets[0].value > subpackets[1].value {
+					result = 1
+				}
+			case .lessthan:
+				if subpackets[0].value < subpackets[1].value {
+					result = 1
+				}
+			case .equalto:
+				if subpackets[0].value == subpackets[1].value {
+					result = 1
+				}
+			default:
+				result = -1
+			}
+			
+			return result
+		}
+		set {}
 	}
 	
 	enum LengthType: Int {
