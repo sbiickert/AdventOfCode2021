@@ -28,6 +28,9 @@
 		375888E3275FB74500047DEA /* Day07_TreacheryOfWhales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375888E2275FB74500047DEA /* Day07_TreacheryOfWhales.swift */; };
 		375888E6275FB76C00047DEA /* 07.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375888E4275FB75400047DEA /* 07.test.txt */; };
 		375888E7275FB76C00047DEA /* 07.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375888E5275FB76100047DEA /* 07.challenge.txt */; };
+		375A030E276B7E2D00011480 /* Day16_PacketDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375A030D276B7E2D00011480 /* Day16_PacketDecoder.swift */; };
+		375A0311276B7ECD00011480 /* 16.test1.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375A030F276B7E3D00011480 /* 16.test1.txt */; };
+		375A0312276B7ECD00011480 /* 16.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375A0310276B7E4800011480 /* 16.challenge.txt */; };
 		375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CCBB52759190D00AF40A1 /* Day02_Dive.swift */; };
 		375CCBB927591EAD00AF40A1 /* 02.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375CCBB72759197E00AF40A1 /* 02.test.txt */; };
 		375CCBBA27591EAD00AF40A1 /* 02.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 375CCBB82759198100AF40A1 /* 02.challenge.txt */; };
@@ -46,6 +49,7 @@
 		37AA2AC02763A05A0076F6F5 /* Day10_SyntaxScoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */; };
 		37AA2AC32763A09D0076F6F5 /* 10.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC12763A0840076F6F5 /* 10.test.txt */; };
 		37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC22763A0930076F6F5 /* 10.challenge.txt */; };
+		37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD0276C55180086DF69 /* 16.test2.txt */; };
 		37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */; };
 		37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C741BA27573B1600187596 /* 01.challenge.txt */; };
 		37D515D62760F13C00FE040C /* Day08_SevenSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */; };
@@ -68,6 +72,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */,
+				375A0311276B7ECD00011480 /* 16.test1.txt in CopyFiles */,
+				375A0312276B7ECD00011480 /* 16.challenge.txt in CopyFiles */,
 				3772569D276A2E85004BA82C /* 15.test.txt in CopyFiles */,
 				3772569E276A2E85004BA82C /* 15.challenge.txt in CopyFiles */,
 				37D7D8D82768DC11008E708E /* 14.test.txt in CopyFiles */,
@@ -131,6 +138,9 @@
 		375888E2275FB74500047DEA /* Day07_TreacheryOfWhales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day07_TreacheryOfWhales.swift; sourceTree = "<group>"; };
 		375888E4275FB75400047DEA /* 07.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 07.test.txt; sourceTree = "<group>"; };
 		375888E5275FB76100047DEA /* 07.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 07.challenge.txt; sourceTree = "<group>"; };
+		375A030D276B7E2D00011480 /* Day16_PacketDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day16_PacketDecoder.swift; sourceTree = "<group>"; };
+		375A030F276B7E3D00011480 /* 16.test1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 16.test1.txt; sourceTree = "<group>"; };
+		375A0310276B7E4800011480 /* 16.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 16.challenge.txt; sourceTree = "<group>"; };
 		375CCBB52759190D00AF40A1 /* Day02_Dive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day02_Dive.swift; sourceTree = "<group>"; };
 		375CCBB72759197E00AF40A1 /* 02.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.test.txt; sourceTree = "<group>"; };
 		375CCBB82759198100AF40A1 /* 02.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 02.challenge.txt; sourceTree = "<group>"; };
@@ -149,6 +159,7 @@
 		37AA2ABF2763A05A0076F6F5 /* Day10_SyntaxScoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10_SyntaxScoring.swift; sourceTree = "<group>"; };
 		37AA2AC12763A0840076F6F5 /* 10.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.test.txt; sourceTree = "<group>"; };
 		37AA2AC22763A0930076F6F5 /* 10.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 10.challenge.txt; sourceTree = "<group>"; };
+		37AF9BD0276C55180086DF69 /* 16.test2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 16.test2.txt; sourceTree = "<group>"; };
 		37C741BA27573B1600187596 /* 01.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.challenge.txt; sourceTree = "<group>"; };
 		37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day01_Sonar_Sweep.swift; sourceTree = "<group>"; };
 		37D515D32760F11800FE040C /* 08.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.test.txt; sourceTree = "<group>"; };
@@ -238,6 +249,9 @@
 				3732F182276869B800CCE8D4 /* 14.challenge.txt */,
 				3772569B276A2DFB004BA82C /* 15.test.txt */,
 				3772569C276A2E03004BA82C /* 15.challenge.txt */,
+				375A030F276B7E3D00011480 /* 16.test1.txt */,
+				37AF9BD0276C55180086DF69 /* 16.test2.txt */,
+				375A0310276B7E4800011480 /* 16.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -260,6 +274,7 @@
 				37778B5727678E2C0011DBB1 /* Day13_Origami.swift */,
 				3732F17F2768698300CCE8D4 /* Day14_Polymerization.swift */,
 				37725699276A2DDD004BA82C /* Day15_Chiton.swift */,
+				375A030D276B7E2D00011480 /* Day16_PacketDecoder.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -295,7 +310,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					370A4A8A2738312D00C003F9 = {
 						CreatedOnToolsVersion = 13.1;
@@ -342,6 +357,7 @@
 				3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */,
 				370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */,
 				37AA2AC02763A05A0076F6F5 /* Day10_SyntaxScoring.swift in Sources */,
+				375A030E276B7E2D00011480 /* Day16_PacketDecoder.swift in Sources */,
 				3732F1802768698300CCE8D4 /* Day14_Polymerization.swift in Sources */,
 				373072992766327C00DECDF7 /* Day12_PassagePathing.swift in Sources */,
 				37FC44F3275BB73B009AB2E1 /* Day04_GiantSquid.swift in Sources */,
@@ -469,6 +485,7 @@
 		370A4A932738312D00C003F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TQU5FGEV2A;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -480,6 +497,7 @@
 		370A4A942738312D00C003F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TQU5FGEV2A;
 				ENABLE_HARDENED_RUNTIME = YES;

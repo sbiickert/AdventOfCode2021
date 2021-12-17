@@ -74,6 +74,12 @@ print("Advent of Code 2021")
 //Chiton.solve(filename: "15.test")
 //Chiton.solve(filename: "15.challenge")
 
+// Day 16
+PacketDecoder.solve(filename: "16.test1")
+//PacketDecoder.solve(filename: "16.test2")
+//PacketDecoder.solve(filename: "16.challenge")
+
+
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 
