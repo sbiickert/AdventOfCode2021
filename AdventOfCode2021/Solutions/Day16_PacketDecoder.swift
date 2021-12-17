@@ -33,24 +33,20 @@ struct PacketDecoder: AoCSolution {
 	}
 	
 	static var binaryData = ""
-	static func readData(at offset: Int, numBits: Int, destructive: Bool) -> Int {
-		let startIndex = binaryData.index(binaryData.startIndex, offsetBy: offset)
-		let endIndex = binaryData.index(binaryData.startIndex, offsetBy: offset+numBits)
+	static func readData(numBits: Int) -> Int {
+		// DESTRUCTIVE OPERATION
+		let startIndex = binaryData.index(binaryData.startIndex, offsetBy: 0)
+		let endIndex = binaryData.index(binaryData.startIndex, offsetBy: 0+numBits)
 		let readStr = String(binaryData[startIndex..<endIndex])
 		let number = Int(readStr, radix: 2)!
-		if destructive {
-			guard offset == 0 else {
-				print("Can't call readData destructively with an offset > 0")
-				return number
-			}
-			binaryData = String(binaryData[endIndex..<binaryData.endIndex])
-		}
+		// Remove the data we read
+		binaryData = String(binaryData[endIndex..<binaryData.endIndex])
 		return number
 	}
 	
 	static func readHead() -> (vers: Int, type: PacketType) {
-		let version = readData(at: 0, numBits: 3, destructive: true)
-		let typeID = readData(at: 0, numBits: 3, destructive: true)
+		let version = readData(numBits: 3)
+		let typeID = readData(numBits: 3)
 		let type = PacketType(rawValue: typeID) ?? PacketType.other
 		return (version, type)
 	}
@@ -130,8 +126,8 @@ class ValuePacket: Packet {
 		var values = [Int]()
 		var bit = 1
 		while bit != 0 {
-			bit = PacketDecoder.readData(at: 0, numBits: 1, destructive: true)
-			let value = PacketDecoder.readData(at: 0, numBits: 4, destructive: true)
+			bit = PacketDecoder.readData(numBits: 1)
+			let value = PacketDecoder.readData(numBits: 4)
 			values.append(value)
 		}
 		self.value = Int(values.map({PacketDecoder.numberToBinary($0)}).joined(), radix: 2)!
@@ -148,11 +144,11 @@ class OperatorPacket: Packet {
 	}
 	
 	private func readSubpackets() {
-		let lengthTypeID = PacketDecoder.readData(at: 0, numBits: 1, destructive: true)
+		let lengthTypeID = PacketDecoder.readData(numBits: 1)
 		let lengthType = LengthType(rawValue: lengthTypeID)!
 		switch lengthType {
 		case .total:
-			let subpacketLength = PacketDecoder.readData(at: 0, numBits: lengthType.size, destructive: true)
+			let subpacketLength = PacketDecoder.readData(numBits: lengthType.size)
 			let dataLength = PacketDecoder.binaryData.count
 			while PacketDecoder.binaryData.count > dataLength - subpacketLength {
 				let head = PacketDecoder.readHead()
@@ -166,7 +162,7 @@ class OperatorPacket: Packet {
 				}
 			}
 		case .subpackets:
-			let subpacketCount = PacketDecoder.readData(at: 0, numBits: lengthType.size, destructive: true)
+			let subpacketCount = PacketDecoder.readData(numBits: lengthType.size)
 			while subpackets.count < subpacketCount {
 				let head = PacketDecoder.readHead()
 				if head.type == .literal {
