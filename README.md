@@ -31,3 +31,7 @@ For a short while, I thought that day 8, part 2 (Seven Segment) was going to for
 ## Day 14: First Fail
 
 Today was the first day where I had to go to Reddit to see how Part 2 was done. I knew when I started that an iterative approach was going to hit the wall when building the polymer, but when part 1 finished fast I had hope. I tried re-writing as a recursion, but it was even worse. I played with optimizing, but it wasn't going to help. It turned out the answer was a lot like the lanternfish, but I couldn't see it until I was shown.
+
+## Day 17: Easier After Some Tough Days
+ 
+Days 14 to 16 have been a tough series. Day 14: had to look up the answer. Day 15 (Chiton) I needed to research the right algorithm (Dijkstra) and Day 16 (Packet Decoding) I worked all day on a solution and ended up throwing away the code and re-starting at 9 pm. As a result, I approached today (Trick Shot) with fear: I could envision the problem easily, but I feared that part two would make my solution go exponential. It didn't, I'm happy to say. What will tomorrow bring?
