@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Algorithms
 
 struct Snailfish: AoCSolution {
 	static func solve(filename: String) {
@@ -14,8 +15,25 @@ struct Snailfish: AoCSolution {
 		let groupedInput = AOCUtil.readGroupedInputFile(named: filename)
 		
 		//oneOffTests()
-		let inputNumbers = parseNumbers(input: groupedInput[4])
+		let inputNumbers = parseNumbers(input: groupedInput[0])
 		let additionResult = addNumbers(inputNumbers)
+		
+		print("Part One")
+		print("The magnitude of the sum is \(additionResult.magnitude)")
+		
+		let largestSum = solvePartTwo(numbers: inputNumbers)
+		
+		print("Part Two")
+		print("The the largest sum is \(largestSum)")
+	}
+	
+	static func solvePartTwo(numbers: [SfNumberPair]) -> Int {
+		var sums = [Int]()
+		for perm in numbers.permutations(ofCount: 2) {
+			let sum = perm[0].copy() + perm[1].copy()
+			sums.append(sum.magnitude)
+		}
+		return sums.max()!
 	}
 	
 	static func oneOffTests() {
@@ -33,9 +51,9 @@ struct Snailfish: AoCSolution {
 	}
 	
 	static func addNumbers(_ numbers:[SfNumberPair]) -> SfNumberPair {
-		var result = numbers[0]
+		var result = numbers[0].copy()
 		for i in 1..<numbers.count {
-			result = result + numbers[i]
+			result = result + numbers[i].copy()
 		}
 		return result
 	}
@@ -54,23 +72,29 @@ struct Snailfish: AoCSolution {
 protocol SfNumberComponent: CustomStringConvertible {
 	var parent: SfNumberPair? {get set}
 	var depth: Int {get}
+	var magnitude: Int {get}
 }
 
 
 class SfNumberPair: SfNumberComponent {
 	
 	static func +(left: SfNumberPair, right: SfNumberPair) -> SfNumberPair {
-		print("  \(left)\n+ \(right)")
+		//print("  \(left)\n+ \(right)")
 		let result = SfNumberPair(left: left, right: right)
 		result.reduce()
-		print("= \(result)\n")
+		//print("= \(result)\n")
 		return result
+	}
+	
+	func copy() -> SfNumberPair {
+		return SfNumberPair(self.description)
 	}
 	
 	var description: String {
 		let result = "[\(vLeft.description),\(vRight.description)]"
 		return result
 	}
+	
 	var flattened: [SfNumberComponent] {
 		var result = [SfNumberComponent]()
 		if vLeft is SfNumberValue {
@@ -141,25 +165,30 @@ class SfNumberPair: SfNumberComponent {
 		return parent!.topPair
 	}
 	
+	var magnitude: Int {
+		let m = (3 * vLeft.magnitude) + (2 * vRight.magnitude)
+		return m
+	}
+	
 	func reduce() {
 		var isReduced = false
 		while isReduced == false {
-			print("Will reduce: \(self.description)")
+			//print("Will reduce: \(self.description)")
 			var didExplode = false
 			var toExplode = findFirstPairThatNeedsExplosion()
 			while toExplode != nil {
 				toExplode!.explode()
-				print("Exploded: \(self.description)")
+				//print("Exploded: \(self.description)")
 				didExplode = true
 				toExplode = findFirstPairThatNeedsExplosion()
 			}
 			var didSplit = false
-			var toSplit = findFirstValueThatNeedsSplit()
-			while toSplit != nil {
+			let toSplit = findFirstValueThatNeedsSplit()
+			if toSplit != nil {
 				toSplit!.split()
-				print("Split: \(self.description)")
+				//print("Split: \(self.description)")
 				didSplit = true
-				toSplit = findFirstValueThatNeedsSplit()
+				//toSplit = findFirstValueThatNeedsSplit()
 			}
 			isReduced = didExplode == false && didSplit == false
 		}
@@ -285,6 +314,9 @@ class SfNumberPair: SfNumberComponent {
 class SfNumberValue: SfNumberComponent {
 	var parent: SfNumberPair?
 	var value: Int = 0
+	var magnitude: Int {
+		return value
+	}
 
 	init() {
 	}

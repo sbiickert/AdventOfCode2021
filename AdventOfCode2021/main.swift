@@ -84,7 +84,8 @@ print("Advent of Code 2021")
 //TrickShot.solve(filename: "17.challenge")
 
 // Day 18
-Snailfish.solve(filename: "18.test")
+//Snailfish.solve(filename: "18.test")
+//Snailfish.solve(filename: "18.challenge")
 
 
 private func testInput(filename: String) {
