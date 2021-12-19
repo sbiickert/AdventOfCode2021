@@ -61,6 +61,9 @@
 		37D7D8D82768DC11008E708E /* 14.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3732F181276869AA00CCE8D4 /* 14.test.txt */; };
 		37D7D8D92768DC11008E708E /* 14.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3732F182276869B800CCE8D4 /* 14.challenge.txt */; };
 		37DDEE642757D6DC0019BA66 /* 01.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37DDEE632757D63D0019BA66 /* 01.test.txt */; };
+		37F1283F276DA7CC00939092 /* 18.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37F1283D276DA7B000939092 /* 18.test.txt */; };
+		37F12840276DA7CC00939092 /* 18.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37F1283E276DA7BD00939092 /* 18.challenge.txt */; };
+		37F12842276DA7E600939092 /* Day18_Snailfish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F12841276DA7E600939092 /* Day18_Snailfish.swift */; };
 		37F399EB273B347E00DB97A4 /* 00.input.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37F399EA273B338100DB97A4 /* 00.input.txt */; };
 		37F488E927613F9F00B39D86 /* 08.single.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37F488E827613F9000B39D86 /* 08.single.txt */; };
 		37FC44F3275BB73B009AB2E1 /* Day04_GiantSquid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC44F2275BB73B009AB2E1 /* Day04_GiantSquid.swift */; };
@@ -75,6 +78,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37F1283F276DA7CC00939092 /* 18.test.txt in CopyFiles */,
+				37F12840276DA7CC00939092 /* 18.challenge.txt in CopyFiles */,
 				378952F3276CD32400AA2145 /* 17.test.txt in CopyFiles */,
 				378952F4276CD32400AA2145 /* 17.challenge.txt in CopyFiles */,
 				37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */,
@@ -174,6 +179,9 @@
 		37D515D42760F12500FE040C /* 08.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.challenge.txt; sourceTree = "<group>"; };
 		37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08_SevenSegment.swift; sourceTree = "<group>"; };
 		37DDEE632757D63D0019BA66 /* 01.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.test.txt; sourceTree = "<group>"; };
+		37F1283D276DA7B000939092 /* 18.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 18.test.txt; sourceTree = "<group>"; };
+		37F1283E276DA7BD00939092 /* 18.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 18.challenge.txt; sourceTree = "<group>"; };
+		37F12841276DA7E600939092 /* Day18_Snailfish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day18_Snailfish.swift; sourceTree = "<group>"; };
 		37F399EA273B338100DB97A4 /* 00.input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 00.input.txt; sourceTree = "<group>"; };
 		37F488E827613F9000B39D86 /* 08.single.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.single.txt; sourceTree = "<group>"; };
 		37FC44F2275BB73B009AB2E1 /* Day04_GiantSquid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day04_GiantSquid.swift; sourceTree = "<group>"; };
@@ -262,6 +270,8 @@
 				375A0310276B7E4800011480 /* 16.challenge.txt */,
 				37AF9BD2276C5D480086DF69 /* 17.test.txt */,
 				37AF9BD3276C5D550086DF69 /* 17.challenge.txt */,
+				37F1283D276DA7B000939092 /* 18.test.txt */,
+				37F1283E276DA7BD00939092 /* 18.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -286,6 +296,7 @@
 				37725699276A2DDD004BA82C /* Day15_Chiton.swift */,
 				375A030D276B7E2D00011480 /* Day16_PacketDecoder.swift */,
 				37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */,
+				37F12841276DA7E600939092 /* Day18_Snailfish.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -373,6 +384,7 @@
 				3732F1802768698300CCE8D4 /* Day14_Polymerization.swift in Sources */,
 				373072992766327C00DECDF7 /* Day12_PassagePathing.swift in Sources */,
 				37FC44F3275BB73B009AB2E1 /* Day04_GiantSquid.swift in Sources */,
+				37F12842276DA7E600939092 /* Day18_Snailfish.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
