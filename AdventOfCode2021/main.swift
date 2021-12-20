@@ -92,6 +92,10 @@ print("Advent of Code 2021")
 //BeaconScanner.solve(filename: "19.test")
 //BeaconScanner.solve(filename: "19.challenge")
 
+// Day 20
+//TrenchMap.solve(filename: "20.test")
+TrenchMap.solve(filename: "20.challenge")
+
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 
