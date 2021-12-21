@@ -94,7 +94,11 @@ print("Advent of Code 2021")
 
 // Day 20
 //TrenchMap.solve(filename: "20.test")
-TrenchMap.solve(filename: "20.challenge")
+//TrenchMap.solve(filename: "20.challenge")
+
+// Day 21
+//DiracDice.solve(startingPositions: (4, 8))   // test
+DiracDice.solve(startingPositions: (1, 3)) // challenge
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

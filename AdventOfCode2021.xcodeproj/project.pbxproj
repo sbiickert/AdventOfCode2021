@@ -42,6 +42,7 @@
 		37778B5C27678EA70011DBB1 /* 13.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37778B5A27678E6E0011DBB1 /* 13.challenge.txt */; };
 		378952F3276CD32400AA2145 /* 17.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD2276C5D480086DF69 /* 17.test.txt */; };
 		378952F4276CD32400AA2145 /* 17.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD3276C5D550086DF69 /* 17.challenge.txt */; };
+		378997DB2772169C00D9B623 /* Day21_DiracDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378997DA2772169C00D9B623 /* Day21_DiracDice.swift */; };
 		3794F227275A776F009C029B /* Day03_BinaryDiagnostic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3794F226275A776F009C029B /* Day03_BinaryDiagnostic.swift */; };
 		3794F22C275A7E68009C029B /* 03.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3794F22A275A7882009C029B /* 03.test.txt */; };
 		3794F22D275A7E68009C029B /* 03.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3794F22B275A7891009C029B /* 03.challenge.txt */; };
@@ -172,6 +173,7 @@
 		37778B5727678E2C0011DBB1 /* Day13_Origami.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day13_Origami.swift; sourceTree = "<group>"; };
 		37778B5927678E5D0011DBB1 /* 13.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 13.test.txt; sourceTree = "<group>"; };
 		37778B5A27678E6E0011DBB1 /* 13.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 13.challenge.txt; sourceTree = "<group>"; };
+		378997DA2772169C00D9B623 /* Day21_DiracDice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day21_DiracDice.swift; sourceTree = "<group>"; };
 		3794F226275A776F009C029B /* Day03_BinaryDiagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day03_BinaryDiagnostic.swift; sourceTree = "<group>"; };
 		3794F22A275A7882009C029B /* 03.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 03.test.txt; sourceTree = "<group>"; };
 		3794F22B275A7891009C029B /* 03.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 03.challenge.txt; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				37F12841276DA7E600939092 /* Day18_Snailfish.swift */,
 				3794F38B276F74E700A88149 /* Day19_BeaconScanner.swift */,
 				37C49E092770D35B00E6D2C8 /* Day20_TrenchMap.swift */,
+				378997DA2772169C00D9B623 /* Day21_DiracDice.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				3794F38C276F74E700A88149 /* Day19_BeaconScanner.swift in Sources */,
 				370A4A8F2738312D00C003F9 /* main.swift in Sources */,
 				3772569A276A2DDD004BA82C /* Day15_Chiton.swift in Sources */,
+				378997DB2772169C00D9B623 /* Day21_DiracDice.swift in Sources */,
 				375888E3275FB74500047DEA /* Day07_TreacheryOfWhales.swift in Sources */,
 				37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */,
 				37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */,
