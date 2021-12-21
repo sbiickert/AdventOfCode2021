@@ -17,7 +17,7 @@ struct DumboOctopus: AoCSolution {
 		var octopi = OctopusGrid(input)
 		//print(octopi.toString())
 		var flashCount = 0
-		for i in 1...100 {
+		for _ in 1...100 {
 			let f = octopi.iterate()
 			//print("Iteration \(i): \(f)")
 			flashCount += f

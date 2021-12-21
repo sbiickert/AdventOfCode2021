@@ -49,7 +49,7 @@ struct DiracDice {
 			if gameOver { break }
 		}
 		players.sort(by: {$0.score > $1.score})
-		let winner = players.first!
+		//let winner = players.first!
 		let loser = players.last!
 		//print("Player \(winner.label) won. Score: \(winner.score)")
 		return loser.score * die.rollCount
@@ -84,7 +84,7 @@ struct DiracDice {
 								newP2.position = newPos
 								newP2.score = gameState.p2.score + newPos
 							}
-							var newGS = GameState(p1: newP1, p2: newP2)
+							let newGS = GameState(p1: newP1, p2: newP2)
 							
 							let c = count * rollSumCount
 							if nextTurnGameStates.keys.contains(newGS) == false {
