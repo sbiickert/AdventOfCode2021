@@ -100,6 +100,10 @@ print("Advent of Code 2021")
 //DiracDice.solve(startingPositions: (4, 8))   // test
 //DiracDice.solve(startingPositions: (1, 3))   // challenge
 
+// Day 22
+ReactorReboot.solve(filename: "22.test")
+//ReactorReboot.solve(filename: "22.challenge")
+
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 

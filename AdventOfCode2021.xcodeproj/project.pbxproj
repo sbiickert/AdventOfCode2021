@@ -63,6 +63,9 @@
 		37C49E0E2770D38800E6D2C8 /* 20.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */; };
 		37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */; };
 		37C741BD27573D9700187596 /* 01.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C741BA27573B1600187596 /* 01.challenge.txt */; };
+		37CD044E277368BB00E14CAF /* Day22_ReactorReboot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */; };
+		37CD045127736DC500E14CAF /* 22.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37CD044F277368D300E14CAF /* 22.test.txt */; };
+		37CD045227736DC500E14CAF /* 22.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37CD0450277368E600E14CAF /* 22.challenge.txt */; };
 		37D515D62760F13C00FE040C /* Day08_SevenSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */; };
 		37D515D72760F22C00FE040C /* 08.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37D515D32760F11800FE040C /* 08.test.txt */; };
 		37D515D82760F22C00FE040C /* 08.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37D515D42760F12500FE040C /* 08.challenge.txt */; };
@@ -86,6 +89,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37CD045127736DC500E14CAF /* 22.test.txt in CopyFiles */,
+				37CD045227736DC500E14CAF /* 22.challenge.txt in CopyFiles */,
 				37C49E0D2770D38800E6D2C8 /* 20.test.txt in CopyFiles */,
 				37C49E0E2770D38800E6D2C8 /* 20.challenge.txt in CopyFiles */,
 				3794F392276F7D2300A88149 /* 19.simple.txt in CopyFiles */,
@@ -196,6 +201,9 @@
 		37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 20.challenge.txt; sourceTree = "<group>"; };
 		37C741BA27573B1600187596 /* 01.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 01.challenge.txt; sourceTree = "<group>"; };
 		37C741BB27573B6400187596 /* Day01_Sonar_Sweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day01_Sonar_Sweep.swift; sourceTree = "<group>"; };
+		37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day22_ReactorReboot.swift; sourceTree = "<group>"; };
+		37CD044F277368D300E14CAF /* 22.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 22.test.txt; sourceTree = "<group>"; };
+		37CD0450277368E600E14CAF /* 22.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 22.challenge.txt; sourceTree = "<group>"; };
 		37D515D32760F11800FE040C /* 08.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.test.txt; sourceTree = "<group>"; };
 		37D515D42760F12500FE040C /* 08.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 08.challenge.txt; sourceTree = "<group>"; };
 		37D515D52760F13C00FE040C /* Day08_SevenSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day08_SevenSegment.swift; sourceTree = "<group>"; };
@@ -298,6 +306,8 @@
 				3794F391276F7D1100A88149 /* 19.simple.txt */,
 				37C49E0B2770D36A00E6D2C8 /* 20.test.txt */,
 				37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */,
+				37CD044F277368D300E14CAF /* 22.test.txt */,
+				37CD0450277368E600E14CAF /* 22.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -326,6 +336,7 @@
 				3794F38B276F74E700A88149 /* Day19_BeaconScanner.swift */,
 				37C49E092770D35B00E6D2C8 /* Day20_TrenchMap.swift */,
 				378997DA2772169C00D9B623 /* Day21_DiracDice.swift */,
+				37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -402,6 +413,7 @@
 				378997DB2772169C00D9B623 /* Day21_DiracDice.swift in Sources */,
 				375888E3275FB74500047DEA /* Day07_TreacheryOfWhales.swift in Sources */,
 				37C741BC27573B6400187596 /* Day01_Sonar_Sweep.swift in Sources */,
+				37CD044E277368BB00E14CAF /* Day22_ReactorReboot.swift in Sources */,
 				37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */,
 				3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */,
 				379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */,
