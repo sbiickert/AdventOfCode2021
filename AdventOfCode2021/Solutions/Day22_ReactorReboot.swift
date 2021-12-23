@@ -13,14 +13,14 @@ struct ReactorReboot: AoCSolution {
 		print("\nDay 21 (Reactor Reboot) -> \(filename)")
 		let groupedInput = AOCUtil.readGroupedInputFile(named: filename)
 		
-		let instructions = parseInstructions(groupedInput[2])
+		let instructions = parseInstructions(groupedInput[0])
 		
 		let part1CubesOn = solvePartOne(instructions)
 
 		print("Part One")
 		print("The number of cubes turned on: \(part1CubesOn)")
 
-		let part2CubesOn = solvePartTwo(instructions)
+		let part2CubesOn = solvePartTwo(instructions, initCubeCount: part1CubesOn)
 
 		print("Part Two")
 		print("The number of cubes turned on: \(part2CubesOn)")
@@ -39,16 +39,15 @@ struct ReactorReboot: AoCSolution {
 		return reactor.activeCubeCount
 	}
 	
-	static func solvePartTwo(_ all: [Instruction]) -> Int {
-		let bTest = true
-		let instructions = all.filter({$0.isInit == bTest})
-		let target = bTest ? 474140 : 2758514936282235
+	static func solvePartTwo(_ all: [Instruction], initCubeCount: Int) -> Int {
+		let instructions = all.filter({$0.isInit == false})
+		//let target = bTest ? 474140 : 2758514936282235
 
 		
 		// coreVolumes will only contain non-overlapping, "on" volumes
 		var coreVolumes = [Volume3D]()
 		for (i, instruction) in instructions.enumerated() {
-			print("Processing instruction \(i)")
+			if i % 25 == 0 {print("Processing instruction \(i)")}
 			let iVol = instruction.vol
 			
 			var bRepeat = true
@@ -79,7 +78,7 @@ struct ReactorReboot: AoCSolution {
 								print("")
 							}
 							
-							coreVolumes.append(contentsOf: fragments.filter({$0 != inter}))
+							coreVolumes.append(contentsOf: fragments)//.filter({$0 != inter}))
 							bRepeat = true
 							break
 						}
@@ -92,14 +91,14 @@ struct ReactorReboot: AoCSolution {
 			}
 		}
 		
-		var countOn = 0
+		var countOn = initCubeCount // Need to remove the cubes turned on by the init
 		for vol in coreVolumes {
 			countOn += vol.count
 		}
 		
-		print("Looking for  \(format(value: target))")
-		print("Got:         \(format(value: countOn))")
-		print("Difference:  \(format(value: target - countOn))")
+//		print("Looking for  \(format(value: target))")
+//		print("Got:         \(format(value: countOn))")
+//		print("Difference:  \(format(value: target - countOn))")
 		return countOn
 	}
 
