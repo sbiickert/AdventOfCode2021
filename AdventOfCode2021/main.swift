@@ -104,6 +104,9 @@ print("Advent of Code 2021")
 //ReactorReboot.solve(filename: "22.test")
 //ReactorReboot.solve(filename: "22.challenge")
 
+// Day 23
+Amphipod.solve(mode: "test")
+
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
 

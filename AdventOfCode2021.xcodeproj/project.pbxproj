@@ -58,6 +58,7 @@
 		37AA2AC42763A09D0076F6F5 /* 10.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AA2AC22763A0930076F6F5 /* 10.challenge.txt */; };
 		37AF9BD1276C56DE0086DF69 /* 16.test2.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD0276C55180086DF69 /* 16.test2.txt */; };
 		37AF9BD5276C5D660086DF69 /* Day17_TrickShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */; };
+		37B1AEF02774EE8F00F5B400 /* Day 23_Amphipod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B1AEEF2774EE8F00F5B400 /* Day 23_Amphipod.swift */; };
 		37C49E0A2770D35B00E6D2C8 /* Day20_TrenchMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C49E092770D35B00E6D2C8 /* Day20_TrenchMap.swift */; };
 		37C49E0D2770D38800E6D2C8 /* 20.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C49E0B2770D36A00E6D2C8 /* 20.test.txt */; };
 		37C49E0E2770D38800E6D2C8 /* 20.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */; };
@@ -196,6 +197,7 @@
 		37AF9BD2276C5D480086DF69 /* 17.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 17.test.txt; sourceTree = "<group>"; };
 		37AF9BD3276C5D550086DF69 /* 17.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 17.challenge.txt; sourceTree = "<group>"; };
 		37AF9BD4276C5D660086DF69 /* Day17_TrickShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day17_TrickShot.swift; sourceTree = "<group>"; };
+		37B1AEEF2774EE8F00F5B400 /* Day 23_Amphipod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day 23_Amphipod.swift"; sourceTree = "<group>"; };
 		37C49E092770D35B00E6D2C8 /* Day20_TrenchMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day20_TrenchMap.swift; sourceTree = "<group>"; };
 		37C49E0B2770D36A00E6D2C8 /* 20.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 20.test.txt; sourceTree = "<group>"; };
 		37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 20.challenge.txt; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				37C49E092770D35B00E6D2C8 /* Day20_TrenchMap.swift */,
 				378997DA2772169C00D9B623 /* Day21_DiracDice.swift */,
 				37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */,
+				37B1AEEF2774EE8F00F5B400 /* Day 23_Amphipod.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				37CD044E277368BB00E14CAF /* Day22_ReactorReboot.swift in Sources */,
 				37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */,
 				3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */,
+				37B1AEF02774EE8F00F5B400 /* Day 23_Amphipod.swift in Sources */,
 				379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */,
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
 				37AF9BD5276C5D660086DF69 /* Day17_TrickShot.swift in Sources */,

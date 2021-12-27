@@ -48,4 +48,20 @@ class AOCUtil {
 		
 		return results
 	}
+	
+	static func rangeToArray(r: Range<Int>) -> [Int] {
+		var result = [Int]()
+		for i in r {
+			result.append(i)
+		}
+		return result
+	}
+	
+	static func cRangeToArray(r: ClosedRange<Int>) -> [Int] {
+		var result = [Int]()
+		for i in r {
+			result.append(i)
+		}
+		return result
+	}
 }

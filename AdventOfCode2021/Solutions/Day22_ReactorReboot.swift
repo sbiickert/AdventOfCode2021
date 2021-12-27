@@ -10,7 +10,7 @@ import Algorithms
 
 struct ReactorReboot: AoCSolution {
 	static func solve(filename: String) {
-		print("\nDay 21 (Reactor Reboot) -> \(filename)")
+		print("\nDay 22 (Reactor Reboot) -> \(filename)")
 		let groupedInput = AOCUtil.readGroupedInputFile(named: filename)
 		
 		let instructions = parseInstructions(groupedInput[0])
