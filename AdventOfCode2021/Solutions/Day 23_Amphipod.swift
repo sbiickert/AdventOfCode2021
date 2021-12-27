@@ -75,7 +75,7 @@ struct Amphipod {
 	
 	static func makeMoves(startingAt current: BurrowState, winningState: BurrowState) {
 		visited.insert(current.fingerPrint)
-		if current == winningState {
+		if current.fingerPrint == winningState.fingerPrint {
 			return
 		}
 		if visited.count % 100 == 0 { print("visited states count: \(visited.count)") }
@@ -98,104 +98,8 @@ struct Amphipod {
 		}
 		for nextMove in nextMoves {
 			makeMoves(startingAt: nextMove, winningState: winningState)
-		}
-	}
-}
-
-/*
- N0--1--N1--2--N2--2--N3--2--N4--2--N5--1--N6
-         \     /\     /\     /\     /
-          2   2  2   2  2   2  2   2
-		   \ /    \ /    \ /    \ /
-	       A0     B0     C0     D0
-            |      |      |      |
-            1      1      1      1
-            |      |      |      |
-           A1     B1     C1     D1
- */
-
-private struct BurrowPathFinder {
-	private static var _paths = Dictionary<String, [String]>()
-	
-	static func key(_ label1: String, _ label2: String) -> String {
-		return label1+label2
-	}
-	static func labels(_ key: String) -> (label1: String, label2: String) {
-		return (String(key.prefix(2)), String(key.suffix(2)))
-	}
-	
-	static func findPath(from n1:String, to n2:String, in b: BurrowState) -> [BurrowLink]? {
-		let k = key(n1, n2)
-		if _paths.keys.contains(k) == false {
-			return nil
-		}
-		
-		let path = _paths[k]!
-		var result = [BurrowLink]()
-		var node = b.nodes[n1]!
-		for label in path {
-			if let link = node.link(to: label) {
-				node = b.nodes[label]!
-				if node.occupant != nil {
-					return nil // Can't get from n1 to n2 without going through an occupant
-				}
-				result.append(link)
-			}
-		}
-		return result
-	}
-	
-	static func bakePaths() {
-		_paths.removeAll()
-		// Hall to room
-		_paths[key("n0", "a0")] = ["n0", "n1", "a0"]
-		_paths[key("n0", "b0")] = ["n0", "n1", "n2", "b0"]
-		_paths[key("n0", "c0")] = ["n0", "n1", "n2", "n3", "c0"]
-		_paths[key("n0", "d0")] = ["n0", "n1", "n2", "n3", "n4", "d0"]
-		_paths[key("n1", "a0")] = ["n1", "a0"]
-		_paths[key("n1", "b0")] = ["n1", "n2", "b0"]
-		_paths[key("n1", "c0")] = ["n1", "n2", "n3", "c0"]
-		_paths[key("n1", "d0")] = ["n1", "n2", "n3", "n4", "d0"]
-		_paths[key("n2", "a0")] = ["n2", "a0"]
-		_paths[key("n2", "b0")] = ["n2", "b0"]
-		_paths[key("n2", "c0")] = ["n2", "n3", "c0"]
-		_paths[key("n2", "d0")] = ["n2", "n3", "n4", "d0"]
-		_paths[key("n3", "a0")] = ["n3", "n2", "a0"]
-		_paths[key("n3", "b0")] = ["n3", "b0"]
-		_paths[key("n3", "c0")] = ["n3", "c0"]
-		_paths[key("n3", "d0")] = ["n3", "n4", "d0"]
-		_paths[key("n4", "a0")] = ["n4", "n3", "n2", "a0"]
-		_paths[key("n4", "b0")] = ["n4", "n3", "b0"]
-		_paths[key("n4", "c0")] = ["n4", "c0"]
-		_paths[key("n4", "d0")] = ["n4", "d0"]
-		_paths[key("n5", "a0")] = ["n5", "n4", "n3", "n2", "a0"]
-		_paths[key("n5", "b0")] = ["n5", "n4", "n3", "b0"]
-		_paths[key("n5", "c0")] = ["n5", "n4", "c0"]
-		_paths[key("n5", "d0")] = ["n5", "d0"]
-		_paths[key("n6", "a0")] = ["n6", "n5", "n4", "n3", "n2", "a0"]
-		_paths[key("n6", "b0")] = ["n6", "n5", "n4", "n3", "b0"]
-		_paths[key("n6", "c0")] = ["n6", "n5", "n4", "c0"]
-		_paths[key("n6", "d0")] = ["n6", "n5", "d0"]
-		for n in 0...6 {
-			for x in APod.allCases {
-				for i in 1..<5 {
-					let k1 = key("n\(n)", "\(x.rawValue)\(i)")
-					let k0 = key("n\(n)", "\(x.rawValue)\(i-1)")
-					var p0 = _paths[k0]!
-					p0.append("\(x.rawValue)\(i)")
-					_paths[k1] = p0
-				}
-			}
-		}
-
-		// Room to hall
-		for n in 0...6 {
-			for x in APod.allCases {
-				for i in 0..<5 {
-					let k = key("n\(n)", "\(x.rawValue)\(i)")
-					let kRev = key("\(x.rawValue)\(i)", "n\(n)")
-					_paths[kRev] = _paths[k]!.reversed()
-				}
+			if visited.contains(winningState.fingerPrint) {
+				return
 			}
 		}
 	}
@@ -230,13 +134,13 @@ struct BurrowState: Hashable {
 			var legalDestinations = Dictionary<String, [BurrowLink]>()
 			if moverNode.isRoom {
 				var bLeaveRoom = false
-				if mover.canEnterNode(withLabel: location) == false {
+				if mover.isAtHomeInNode(withLabel: location) == false {
 					// This amphipod is in the wrong room.
 					bLeaveRoom = true
 				}
 				else {
 					// This amphipod is in the right room. Is it blocking another apod from leaving?
-					if roomHasWrongOccupant(room: mover.rawValue) && occupantIsBlockingExit(at: moverNode.label) {
+					if roomHasForeignOccupant(room: mover.rawValue) && occupantIsBlockingExit(at: moverNode.label) {
 						// Yep. Gotta leave to make room.
 						bLeaveRoom = true
 					}
@@ -253,8 +157,8 @@ struct BurrowState: Hashable {
 			}
 			else {
 				// In hall. Can it move into the right room?
-				if roomHasWrongOccupant(room: mover.rawValue) == false {
-					for i in stride(from: roomSize-1, to: 0, by: -1) {
+				if roomHasForeignOccupant(room: mover.rawValue) == false {
+					for i in stride(from: roomSize-1, through: 0, by: -1) {
 						let label = "\(mover.rawValue)\(i)"
 						if let path = BurrowPathFinder.findPath(from: location, to: label, in: self) {
 							legalDestinations[label] = path
@@ -289,7 +193,7 @@ struct BurrowState: Hashable {
 		return newState
 	}
 		
-	func roomHasWrongOccupant(room: String) -> Bool {
+	func roomHasForeignOccupant(room: String) -> Bool {
 		for i in 0..<roomSize {
 			let label = "\(room)\(i)"
 			if let occupant = nodes[label]?.occupant {
@@ -307,7 +211,7 @@ struct BurrowState: Hashable {
 		for index in nodeIndex+1..<roomSize {
 			let blockedNode = nodes[nodeLabel.prefix(1) + String(index)]!
 			assert(blockedNode.occupant != nil) // Should never happen
-			if blockedNode.occupant!.canEnterNode(withLabel: blockedNode.label) == false {
+			if blockedNode.occupant!.isAtHomeInNode(withLabel: blockedNode.label) == false {
 				return true
 			}
 		}
@@ -443,6 +347,105 @@ struct BurrowLink: Hashable {
 	let cost: Int
 }
 
+/*
+ N0--1--N1--2--N2--2--N3--2--N4--2--N5--1--N6
+		 \     /\     /\     /\     /
+		  2   2  2   2  2   2  2   2
+		   \ /    \ /    \ /    \ /
+		   A0     B0     C0     D0
+			|      |      |      |
+			1      1      1      1
+			|      |      |      |
+		   A1     B1     C1     D1
+ */
+
+private struct BurrowPathFinder {
+	private static var _paths = Dictionary<String, [String]>()
+	
+	static func key(_ label1: String, _ label2: String) -> String {
+		return label1+label2
+	}
+	static func labels(_ key: String) -> (label1: String, label2: String) {
+		return (String(key.prefix(2)), String(key.suffix(2)))
+	}
+	
+	static func findPath(from n1:String, to n2:String, in b: BurrowState) -> [BurrowLink]? {
+		let k = key(n1, n2)
+		if _paths.keys.contains(k) == false {
+			return nil
+		}
+		
+		let path = _paths[k]!
+		var result = [BurrowLink]()
+		var node = b.nodes[n1]!
+		for label in path {
+			if let link = node.link(to: label) {
+				node = b.nodes[label]!
+				if node.occupant != nil {
+					return nil // Can't get from n1 to n2 without going through an occupant
+				}
+				result.append(link)
+			}
+		}
+		return result
+	}
+	
+	static func bakePaths() {
+		_paths.removeAll()
+		// Hall to room
+		_paths[key("n0", "a0")] = ["n0", "n1", "a0"]
+		_paths[key("n0", "b0")] = ["n0", "n1", "n2", "b0"]
+		_paths[key("n0", "c0")] = ["n0", "n1", "n2", "n3", "c0"]
+		_paths[key("n0", "d0")] = ["n0", "n1", "n2", "n3", "n4", "d0"]
+		_paths[key("n1", "a0")] = ["n1", "a0"]
+		_paths[key("n1", "b0")] = ["n1", "n2", "b0"]
+		_paths[key("n1", "c0")] = ["n1", "n2", "n3", "c0"]
+		_paths[key("n1", "d0")] = ["n1", "n2", "n3", "n4", "d0"]
+		_paths[key("n2", "a0")] = ["n2", "a0"]
+		_paths[key("n2", "b0")] = ["n2", "b0"]
+		_paths[key("n2", "c0")] = ["n2", "n3", "c0"]
+		_paths[key("n2", "d0")] = ["n2", "n3", "n4", "d0"]
+		_paths[key("n3", "a0")] = ["n3", "n2", "a0"]
+		_paths[key("n3", "b0")] = ["n3", "b0"]
+		_paths[key("n3", "c0")] = ["n3", "c0"]
+		_paths[key("n3", "d0")] = ["n3", "n4", "d0"]
+		_paths[key("n4", "a0")] = ["n4", "n3", "n2", "a0"]
+		_paths[key("n4", "b0")] = ["n4", "n3", "b0"]
+		_paths[key("n4", "c0")] = ["n4", "c0"]
+		_paths[key("n4", "d0")] = ["n4", "d0"]
+		_paths[key("n5", "a0")] = ["n5", "n4", "n3", "n2", "a0"]
+		_paths[key("n5", "b0")] = ["n5", "n4", "n3", "b0"]
+		_paths[key("n5", "c0")] = ["n5", "n4", "c0"]
+		_paths[key("n5", "d0")] = ["n5", "d0"]
+		_paths[key("n6", "a0")] = ["n6", "n5", "n4", "n3", "n2", "a0"]
+		_paths[key("n6", "b0")] = ["n6", "n5", "n4", "n3", "b0"]
+		_paths[key("n6", "c0")] = ["n6", "n5", "n4", "c0"]
+		_paths[key("n6", "d0")] = ["n6", "n5", "d0"]
+		for n in 0...6 {
+			for x in APod.allCases {
+				for i in 1..<5 {
+					let k1 = key("n\(n)", "\(x.rawValue)\(i)")
+					let k0 = key("n\(n)", "\(x.rawValue)\(i-1)")
+					var p0 = _paths[k0]!
+					p0.append("\(x.rawValue)\(i)")
+					_paths[k1] = p0
+				}
+			}
+		}
+
+		// Room to hall
+		for n in 0...6 {
+			for x in APod.allCases {
+				for i in 0..<5 {
+					let k = key("n\(n)", "\(x.rawValue)\(i)")
+					let kRev = key("\(x.rawValue)\(i)", "n\(n)")
+					_paths[kRev] = _paths[k]!.reversed()
+				}
+			}
+		}
+	}
+}
+
 enum APod:String, Hashable, CaseIterable {
 	case A = "a"
 	case B = "b"
@@ -462,10 +465,7 @@ enum APod:String, Hashable, CaseIterable {
 		}
 	}
 	
-	func canEnterNode(withLabel label: String) -> Bool {
-		if label.starts(with: "n") {
-			return true
-		}
+	func isAtHomeInNode(withLabel label: String) -> Bool {
 		if label.starts(with: self.rawValue) {
 			return true
 		}
