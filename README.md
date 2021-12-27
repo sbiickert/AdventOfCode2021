@@ -35,3 +35,8 @@ Today was the first day where I had to go to Reddit to see how Part 2 was done. 
 ## Day 17: Easier After Some Tough Days
  
 Days 14 to 16 have been a tough series. Day 14: had to look up the answer. Day 15 (Chiton) I needed to research the right algorithm (Dijkstra) and Day 16 (Packet Decoding) I worked all day on a solution and ended up throwing away the code and re-starting at 9 pm. As a result, I approached today (Trick Shot) with fear: I could envision the problem easily, but I feared that part two would make my solution go exponential. It didn't, I'm happy to say. What will tomorrow bring?
+
+
+## Days 22 and 23: Where the Music Died
+
+Maybe when I've got some distance from these two days I'll be okay with it, but I got stuck on both of these days and it took too long to solve them. Day 22 (Reactor) was a problem I could visualize but then solving took me into Dec. 23. Then Day 23 (Amphipod) had a couple of bugs hiding in my code that took forever to hunt down. I was going through the solution and re-writing or re-factoring code, trying to find the bug. Turns out there were two off-by-one errors that sank me. Now here I am on Boxing Day and I will start Day 24 tomorrow.
