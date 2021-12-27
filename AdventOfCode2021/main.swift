@@ -106,7 +106,11 @@ print("Advent of Code 2021")
 
 // Day 23
 //Amphipod.solve(mode: "test")
-Amphipod.solve(mode: "challenge")
+//Amphipod.solve(mode: "challenge")
+
+// Day 24
+//ArithmeticLogic.performTests(filename: "24.test")
+ArithmeticLogic.solve(filename: "24.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)

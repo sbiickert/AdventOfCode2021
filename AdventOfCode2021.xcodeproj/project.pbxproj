@@ -40,6 +40,9 @@
 		37778B5827678E2C0011DBB1 /* Day13_Origami.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37778B5727678E2C0011DBB1 /* Day13_Origami.swift */; };
 		37778B5B27678EA70011DBB1 /* 13.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37778B5927678E5D0011DBB1 /* 13.test.txt */; };
 		37778B5C27678EA70011DBB1 /* 13.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37778B5A27678E6E0011DBB1 /* 13.challenge.txt */; };
+		37818C35277955450056602C /* Day24_ArithmeticLU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37818C34277955450056602C /* Day24_ArithmeticLU.swift */; };
+		37818C38277955C10056602C /* 24.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37818C36277955A80056602C /* 24.test.txt */; };
+		37818C39277955C10056602C /* 24.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37818C37277955B50056602C /* 24.challenge.txt */; };
 		378952F3276CD32400AA2145 /* 17.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD2276C5D480086DF69 /* 17.test.txt */; };
 		378952F4276CD32400AA2145 /* 17.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37AF9BD3276C5D550086DF69 /* 17.challenge.txt */; };
 		378997DB2772169C00D9B623 /* Day21_DiracDice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378997DA2772169C00D9B623 /* Day21_DiracDice.swift */; };
@@ -90,6 +93,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				37818C38277955C10056602C /* 24.test.txt in CopyFiles */,
+				37818C39277955C10056602C /* 24.challenge.txt in CopyFiles */,
 				37CD045127736DC500E14CAF /* 22.test.txt in CopyFiles */,
 				37CD045227736DC500E14CAF /* 22.challenge.txt in CopyFiles */,
 				37C49E0D2770D38800E6D2C8 /* 20.test.txt in CopyFiles */,
@@ -179,6 +184,9 @@
 		37778B5727678E2C0011DBB1 /* Day13_Origami.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day13_Origami.swift; sourceTree = "<group>"; };
 		37778B5927678E5D0011DBB1 /* 13.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 13.test.txt; sourceTree = "<group>"; };
 		37778B5A27678E6E0011DBB1 /* 13.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 13.challenge.txt; sourceTree = "<group>"; };
+		37818C34277955450056602C /* Day24_ArithmeticLU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day24_ArithmeticLU.swift; sourceTree = "<group>"; };
+		37818C36277955A80056602C /* 24.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 24.test.txt; sourceTree = "<group>"; };
+		37818C37277955B50056602C /* 24.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 24.challenge.txt; sourceTree = "<group>"; };
 		378997DA2772169C00D9B623 /* Day21_DiracDice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day21_DiracDice.swift; sourceTree = "<group>"; };
 		3794F226275A776F009C029B /* Day03_BinaryDiagnostic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day03_BinaryDiagnostic.swift; sourceTree = "<group>"; };
 		3794F22A275A7882009C029B /* 03.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 03.test.txt; sourceTree = "<group>"; };
@@ -310,6 +318,8 @@
 				37C49E0C2770D37A00E6D2C8 /* 20.challenge.txt */,
 				37CD044F277368D300E14CAF /* 22.test.txt */,
 				37CD0450277368E600E14CAF /* 22.challenge.txt */,
+				37818C36277955A80056602C /* 24.test.txt */,
+				37818C37277955B50056602C /* 24.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -340,6 +350,7 @@
 				378997DA2772169C00D9B623 /* Day21_DiracDice.swift */,
 				37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */,
 				37B1AEEF2774EE8F00F5B400 /* Day 23_Amphipod.swift */,
+				37818C34277955450056602C /* Day24_ArithmeticLU.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -419,6 +430,7 @@
 				37CD044E277368BB00E14CAF /* Day22_ReactorReboot.swift in Sources */,
 				37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */,
 				3739F9AA2762438900114F89 /* Day09_SmokeBasin.swift in Sources */,
+				37818C35277955450056602C /* Day24_ArithmeticLU.swift in Sources */,
 				37B1AEF02774EE8F00F5B400 /* Day 23_Amphipod.swift in Sources */,
 				379FF261275E532F00C279A1 /* Day06_LanternFish.swift in Sources */,
 				375CCBB62759190D00AF40A1 /* Day02_Dive.swift in Sources */,
