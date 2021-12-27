@@ -23,50 +23,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "61DF2F79-54AB-478B-8910-8E46C5C26414"
+            uuid = "E6D6BA85-DBDD-4F30-8458-CF05F95019D6"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AdventOfCode2021/Solutions/Day 23_Amphipod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "solvePartOne(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "054EDBB9-404B-44B3-BD82-EFC4E41865C9"
-            shouldBeEnabled = "No"
-            condition = "self.nodes[&quot;n5&quot;]!.occupant == .D"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AdventOfCode2021/Solutions/Day 23_Amphipod.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "legalMoves"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "355F23B4-2455-4F98-AC73-33438906BB66"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AdventOfCode2021/Solutions/Day 23_Amphipod.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "legalMoves"
-            landmarkType = "24">
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

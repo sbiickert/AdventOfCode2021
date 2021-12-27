@@ -33,55 +33,48 @@ struct Amphipod {
 		print("\nDay 23 (Amphipod) -> \(mode)")
 
 		BurrowPathFinder.bakePaths()
-		let burrow = BurrowState(mode + "1", roomSize: 2)
 		
-		let cost = solvePartOne(burrow)
+		let burrow1 = BurrowState(mode + "1", roomSize: 2)
+		let cost1 = solvePart(burrow1)
 		
 		print("Part One")
-		print("The answer is: \(cost)")
+		print("The answer is: \(cost1)")
+		
+		let burrow2 = BurrowState(mode + "2", roomSize: 4)
+		let cost2 = solvePart(burrow2)
+		
+		// Just realized that part 2, the code is returning 45169 for test, when the answer is 44169
+		print("Part Two")
+		print("The answer is: \(cost2)") // 46590 too low  52356 too high   52156 wrong
 	}
 	
-	static func solvePartOne(_ initialState: BurrowState) -> Int {
+	static func solvePart(_ initialState: BurrowState) -> Int {
 		states.removeAll()
 		visited.removeAll()
-		let win = BurrowState("win", roomSize: 2)
+		let win = BurrowState("win", roomSize: initialState.roomSize)
 		var current = initialState
 		current.calcLeastCost = 0
 		visited.insert(current.fingerPrint)
 		states[current.fingerPrint] = current
 		current.draw()
-		
-//		var samplePaths = [("c0", "n2"),				// These are the instructions illustrated in the example
-//						   ("b0", "n3"), ("n3", "c0"),
-//						   ("b1", "n3"), ("n2", "b1"),
-//						   ("a0", "n2"), ("n2", "b0"),
-//							("d0", "n4"), ("d1", "n5"),
-//							("n4", "d1"), ("n3", "d0"),
-//							("n5", "a0")]
-//		while states.keys.contains(win.fingerPrint) == false {
-//			let coords = samplePaths.removeFirst()
-//			let path = BurrowPathFinder.findPath(from: coords.0, to: coords.1, in: current)!
-//			let newState = current.makeMove(from: coords.0, to: coords.1, via: path)
-//			newState.draw()
-//			states[newState.fingerPrint] = newState
-//			current = newState
-//		}
+		//win.draw()
 
 		makeMoves(startingAt: current, winningState: win)
 		
 		let winningState = states[win.fingerPrint]!
 		return winningState.calcLeastCost
 	}
-	
+
 	static func makeMoves(startingAt current: BurrowState, winningState: BurrowState) {
 		visited.insert(current.fingerPrint)
 		if current.fingerPrint == winningState.fingerPrint {
 			return
 		}
-		if visited.count % 100 == 0 { print("visited states count: \(visited.count)") }
+		//if visited.count % 100 == 0 { print("visited states count: \(visited.count)") }
 
 		var nextMoves = [BurrowState]()
-		for legalMove in current.legalMoves.filter({visited.contains($0.fingerPrint) == false}).sorted(by: {$0.calcLeastCost < $1.calcLeastCost})
+		//for legalMove in current.legalMoves.filter({visited.contains($0.fingerPrint) == false}).sorted(by: {$0.calcLeastCost < $1.calcLeastCost})
+		for legalMove in current.legalMoves.sorted(by: {$0.calcLeastCost < $1.calcLeastCost})
 		{
 			// If the new state isn't in states, add it
 			if states.keys.contains(legalMove.fingerPrint) == false {
@@ -98,9 +91,9 @@ struct Amphipod {
 		}
 		for nextMove in nextMoves {
 			makeMoves(startingAt: nextMove, winningState: winningState)
-			if visited.contains(winningState.fingerPrint) {
-				return
-			}
+//			if visited.contains(winningState.fingerPrint) {
+//				return
+//			}
 		}
 	}
 }
@@ -225,12 +218,14 @@ struct BurrowState: Hashable {
 		let n = AOCUtil.cRangeToArray(r: 0...6).map({nodes["n\($0)"]?.occupant?.rawValue ?? dot})
 		result += "\(n[0])\(n[1]).\(n[2]).\(n[3]).\(n[4]).\(n[5])\(n[6])"
 		result += "#\n###"
-		for _ in 1..<roomSize {
-			result += ["a","b","c","d"].map({nodes["\($0)0"]?.occupant?.rawValue ?? dot}).joined(separator: "#")
-			result += "###\n  #"
+		result += ["a","b","c","d"].map({nodes["\($0)0"]?.occupant?.rawValue ?? dot}).joined(separator: "#")
+		result += "###\n"
+		for i in 1..<roomSize {
+			result += "  #"
+			result += ["a","b","c","d"].map({nodes["\($0)\(i)"]?.occupant?.rawValue ?? dot}).joined(separator: "#")
+			result += "#\n"
 		}
-		result += ["a","b","c","d"].map({nodes["\($0)1"]?.occupant?.rawValue ?? dot}).joined(separator: "#")
-		result += "#  \n  #########\n"
+		result += "  #########\n"
 		print(result)
 	}
 	
@@ -259,12 +254,13 @@ struct BurrowState: Hashable {
 		// Connect nodes
 		nodes["n0"]!.connect(otherLabel: "n1", cost: 1)
 		nodes["n1"]!.connect(otherLabel: "n0", cost: 1)
-		for i in AOCUtil.cRangeToArray(r: 1...5) {
+		for i in AOCUtil.cRangeToArray(r: 1...4) {
 			let label0 = "n\(i)"
 			let label1 = "n\(i+1)"
-			nodes[label0]?.connect(otherLabel: label1, cost: 2)
+			nodes[label0]?.connect(otherLabel: label1, cost: i < 5 ? 2 : 1)
 			nodes[label1]?.connect(otherLabel: label0, cost: i < 5 ? 2 : 1)
 		}
+		nodes["n5"]!.connect(otherLabel: "n6", cost: 1)
 		nodes["n6"]!.connect(otherLabel: "n5", cost: 1)
 
 		nodes["n1"]!.connect(otherLabel: "a0", cost: 2)
@@ -308,6 +304,24 @@ struct BurrowState: Hashable {
 			nodes["d0"]?.occupant = .D
 			nodes["d1"]?.occupant = .A
 		}
+		if mode == "test2" {
+			nodes["a0"]?.occupant = .B
+			nodes["a1"]?.occupant = .D
+			nodes["a2"]?.occupant = .D
+			nodes["a3"]?.occupant = .A
+			nodes["b0"]?.occupant = .C
+			nodes["b1"]?.occupant = .C
+			nodes["b2"]?.occupant = .B
+			nodes["b3"]?.occupant = .D
+			nodes["c0"]?.occupant = .B
+			nodes["c1"]?.occupant = .B
+			nodes["c2"]?.occupant = .A
+			nodes["c3"]?.occupant = .C
+			nodes["d0"]?.occupant = .D
+			nodes["d1"]?.occupant = .A
+			nodes["d2"]?.occupant = .C
+			nodes["d3"]?.occupant = .A
+		}
 		if mode == "challenge1" {
 			nodes["a0"]?.occupant = .A
 			nodes["a1"]?.occupant = .C
@@ -317,6 +331,24 @@ struct BurrowState: Hashable {
 			nodes["c1"]?.occupant = .B
 			nodes["d0"]?.occupant = .A
 			nodes["d1"]?.occupant = .B
+		}
+		if mode == "challenge2" {
+			nodes["a0"]?.occupant = .A
+			nodes["a1"]?.occupant = .D
+			nodes["a2"]?.occupant = .D
+			nodes["a3"]?.occupant = .C
+			nodes["b0"]?.occupant = .D
+			nodes["b1"]?.occupant = .C
+			nodes["b2"]?.occupant = .B
+			nodes["b3"]?.occupant = .D
+			nodes["c0"]?.occupant = .C
+			nodes["c1"]?.occupant = .B
+			nodes["c2"]?.occupant = .A
+			nodes["c3"]?.occupant = .B
+			nodes["d0"]?.occupant = .A
+			nodes["d1"]?.occupant = .A
+			nodes["d2"]?.occupant = .C
+			nodes["d3"]?.occupant = .B
 		}
 		fingerPrint = ""
 		setFingerprint()
