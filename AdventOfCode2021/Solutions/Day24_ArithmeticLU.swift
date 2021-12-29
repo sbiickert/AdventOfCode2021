@@ -9,7 +9,10 @@
 import Foundation
 import Algorithms
 
+var validModelNumbers = [Int]()
+
 struct ArithmeticLogic:AoCSolution {
+	
 	static func solve(filename: String) {
 		print("\nDay 24 (ALU) -> \(filename)")
 		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
@@ -22,27 +25,42 @@ struct ArithmeticLogic:AoCSolution {
 	}
 	
 	/*
-	 Test from: 11111111111111 through: 11111111999999
+	 Test from: 11,111,111,111,111 through: 11,111,111,999,999
 	 Unoptimized, in profiler: 14.26s
 	 Optimized Instruction.bValue: 13.19
 	 Optimized value generation: 12.11
 	 Changed registers to array: 2.48
+	 DispatchQueues: 2.6s to do 4x the work
+	 DispatchQueues: 3.9s to do 8x the work
 	 */
 	
 	static func solvePartOne(_ input: [String]) -> Int {
 		let program = parseInstructions(input: input)
-		let unit = ALU()
-		unit.load(program: program)
-		let generator = ModelNumberGenerator("11111111111111", "11111111999999")
-		while generator.endOfSequence == false {
-			unit.reset()
-			unit.inputMultiDigit(value: generator.modelNumber)
-			unit.run()
-			//print(generator.modelNumber)
-			//unit.printRegisters()
-			if unit.registers[ALU.Reg.Z.rawValue] == 0 { break }
-			generator.next()
-			
+		var workItems = [DispatchWorkItem]()
+		for threadNumber in 1...8 {
+			let dwi = DispatchWorkItem() {
+				let unit = ALU()
+				unit.load(program: program)
+				let generator = ModelNumberGenerator("\(threadNumber)1111111111111", "\(threadNumber)1111111999999")
+				while generator.endOfSequence == false {
+					unit.reset()
+					unit.inputMultiDigit(value: generator.modelNumber)
+					unit.run()
+					//print(generator.modelNumber)
+					//unit.printRegisters()
+					if unit.registers[ALU.Reg.Z.rawValue] == 0 {
+						validModelNumbers.append(generator.value)
+						print("Found valid model number: \(generator.value)")
+					}
+					generator.next()
+				}
+				print("Thread \(threadNumber) finished.")
+			}
+			DispatchQueue.global().async(execute: dwi)
+			workItems.append(dwi)
+		}
+		for wi in workItems {
+			wi.wait()
 		}
 		return 0
 	}
@@ -63,7 +81,7 @@ struct ArithmeticLogic:AoCSolution {
 		for i in input {
 			unit.addInput(value: i)
 		}
-		//let result = unit.run()
+		unit.run()
 		unit.printRegisters()
 	}
 	
@@ -229,5 +247,11 @@ class ModelNumberGenerator {
 		}
 		endOfSequence = (modelNumber == end)
 		return !endOfSequence
+	}
+	
+	var value: Int {
+		var s = ""
+		modelNumber.forEach({s += String($0)})
+		return Int(s)!
 	}
 }
