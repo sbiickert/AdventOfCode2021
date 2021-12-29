@@ -21,22 +21,28 @@ struct ArithmeticLogic:AoCSolution {
 
 	}
 	
+	/*
+	 Test from: 11111111111111 through: 11111111999999
+	 Unoptimized, in profiler: 14.26s
+	 Optimized Instruction.bValue: 13.19
+	 Optimized value generation: 12.11
+	 Changed registers to array: 2.48
+	 */
 	
 	static func solvePartOne(_ input: [String]) -> Int {
 		let program = parseInstructions(input: input)
 		let unit = ALU()
 		unit.load(program: program)
-		var testValue = ""
-		for value in stride(from: 99999999999999, through: 11111111111111, by: -1) {
-			testValue = String(value)
-			if testValue.contains("0") == false {
-				unit.reset()
-				unit.inputMultiDigit(value: testValue)
-				unit.run()
-				print(testValue)
-				unit.printRegisters()
-				if unit.registers["z"]! == 0 { break }
-			}
+		let generator = ModelNumberGenerator("11111111111111", "11111111999999")
+		while generator.endOfSequence == false {
+			unit.reset()
+			unit.inputMultiDigit(value: generator.modelNumber)
+			unit.run()
+			//print(generator.modelNumber)
+			//unit.printRegisters()
+			if unit.registers[ALU.Reg.Z.rawValue] == 0 { break }
+			generator.next()
+			
 		}
 		return 0
 	}
@@ -75,14 +81,41 @@ struct ArithmeticLogic:AoCSolution {
 }
 
 class ALU {
-	var registers:Dictionary<String, Int> = ["w": 0, "x": 0, "y": 0, "z": 0]
+	enum Reg: Int {
+		case W = 0
+		case X = 1
+		case Y = 2
+		case Z = 3
+		case ERR = -1
+	
+		static func from(character c: String) -> Reg {
+			switch c {
+			case "w":
+				return .W
+			case "x":
+				return .X
+			case "y":
+				return .Y
+			case "z":
+				return .Z
+			default:
+				return .ERR
+			}
+		}
+	}
+	
+	var registers:[Int] = [0,0,0,0]
+	
 	private var _inputQ = [Int]()
 	private var _program = [Instruction]()
 	
 	init() {}
 	
 	func reset() {
-		registers = ["w": 0, "x": 0, "y": 0, "z": 0]
+		registers[Reg.W.rawValue] = 0
+		registers[Reg.X.rawValue] = 0
+		registers[Reg.Y.rawValue] = 0
+		registers[Reg.Z.rawValue] = 0
 		_inputQ.removeAll()
 	}
 	
@@ -93,6 +126,10 @@ class ALU {
 		}
 	}
 	
+	func inputMultiDigit(value: [Int]) {
+		_inputQ = value
+	}
+
 	func addInput(value: Int) {
 		_inputQ.insert(value, at: 0)
 	}
@@ -106,39 +143,34 @@ class ALU {
 		_program.append(contentsOf: program)
 	}
 		
-	func run() -> Dictionary<String, Int> {
+	func run() {
 		for i in _program {
 			if i.type == .inp {
 				let input = readInput()!
-				registers[i.a] = input
+				registers[i.a.rawValue] = input
 				continue
 			}
-			let inputA = registers[i.a]!
-			let inputB = i.bIsLiteral ? Int(i.b!)! : registers[i.b!]!
+			let inputA = registers[i.a.rawValue]
+			let inputB = i.bValue == nil ? registers[i.b!.rawValue] : i.bValue!
 			switch i.type {
 			case .add:
-				registers[i.a] = inputA + inputB
+				registers[i.a.rawValue] = inputA + inputB
 			case .mul:
-				registers[i.a] = inputA * inputB
+				registers[i.a.rawValue] = inputA * inputB
 			case .div:
-				registers[i.a] = inputA / inputB
+				registers[i.a.rawValue] = inputA / inputB
 			case .mod:
-				registers[i.a] = inputA % inputB
+				registers[i.a.rawValue] = inputA % inputB
 			case .eql:
-				registers[i.a] = inputA == inputB ? 1 : 0
+				registers[i.a.rawValue] = inputA == inputB ? 1 : 0
 			default:
 				_ = 1
 			}
 		}
-		return self.registers
 	}
 	
 	func printRegisters() {
-		var values = [String]()
-		for key in registers.keys.sorted() {
-			values.append("\(key): \(registers[key]!)")
-		}
-		print("[\(values.joined(separator: " "))]")
+		print("[w: \(registers[Reg.W.rawValue]) x: \(registers[Reg.X.rawValue]) y: \(registers[Reg.Y.rawValue]) z: \(registers[Reg.Z.rawValue]) ]")
 	}
 	
 	enum InstructionType: String {
@@ -152,15 +184,50 @@ class ALU {
 	
 	struct Instruction {
 		let type: InstructionType
-		let a: String
-		let b: String?
+		let a: Reg
+		let b: Reg?
+		var bValue: Int?
 		
-		var bIsLiteral: Bool {
-			if b == nil || Int(b!) == nil {
-				return false
+		init(type: InstructionType, a: String, b: String?) {
+			self.type = type
+			self.a = Reg.from(character: a)
+			self.b = b != nil ? Reg.from(character: b!) : nil
+			if let bUnwrapped = b {
+				self.bValue = Int(bUnwrapped)
 			}
-			return true
 		}
 	}
 }
 
+
+class ModelNumberGenerator {
+	var modelNumber = [Int](repeating: 1, count: 14)
+	private(set) var start = [Int]()
+	private(set) var end = [Int]()
+	var endOfSequence = false
+	
+	init(_ startValue: String, _ endValue: String) {
+		assert(startValue.count == 14 && endValue.count == 14)
+		start = startValue.map({Int(String($0))!})
+		end   = endValue.map({Int(String($0))!})
+		modelNumber = start
+	}
+	
+	func next() -> Bool {
+		guard !endOfSequence else {return false}
+		// increment model number, return true if we haven't reached end yet.
+		var carrying = true // to get in the loop
+		var place = modelNumber.count - 1
+		while carrying && place >= 0 {
+			carrying = false
+			modelNumber[place] += 1
+			if modelNumber[place] > 9 {
+				modelNumber[place] = 1
+				carrying = true
+				place -= 1
+			}
+		}
+		endOfSequence = (modelNumber == end)
+		return !endOfSequence
+	}
+}
