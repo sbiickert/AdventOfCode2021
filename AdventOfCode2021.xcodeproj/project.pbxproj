@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		370A4A8F2738312D00C003F9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A8E2738312D00C003F9 /* main.swift */; };
 		370A4A96273831BA00C003F9 /* AoCUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A4A95273831BA00C003F9 /* AoCUtil.swift */; };
+		3716269B277E053D009A1E5D /* Day25_SeaCucumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3716269A277E053D009A1E5D /* Day25_SeaCucumber.swift */; };
+		3716269E277E0594009A1E5D /* 25.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3716269C277E054D009A1E5D /* 25.test.txt */; };
+		3716269F277E0594009A1E5D /* 25.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3716269D277E055C009A1E5D /* 25.challenge.txt */; };
 		37172192275CF36A006DCCE4 /* Day05_Hydrothermal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */; };
 		37172195275CF427006DCCE4 /* 05.test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172193275CF3DB006DCCE4 /* 05.test.txt */; };
 		37172196275CF427006DCCE4 /* 05.challenge.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 37172194275CF400006DCCE4 /* 05.challenge.txt */; };
@@ -93,6 +96,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				3716269E277E0594009A1E5D /* 25.test.txt in CopyFiles */,
+				3716269F277E0594009A1E5D /* 25.challenge.txt in CopyFiles */,
 				37818C38277955C10056602C /* 24.test.txt in CopyFiles */,
 				37818C39277955C10056602C /* 24.challenge.txt in CopyFiles */,
 				37CD045127736DC500E14CAF /* 22.test.txt in CopyFiles */,
@@ -152,6 +157,9 @@
 		370A4A8B2738312D00C003F9 /* AdventOfCode2021 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2021; sourceTree = BUILT_PRODUCTS_DIR; };
 		370A4A8E2738312D00C003F9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		370A4A95273831BA00C003F9 /* AoCUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AoCUtil.swift; sourceTree = "<group>"; };
+		3716269A277E053D009A1E5D /* Day25_SeaCucumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day25_SeaCucumber.swift; sourceTree = "<group>"; };
+		3716269C277E054D009A1E5D /* 25.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 25.test.txt; sourceTree = "<group>"; };
+		3716269D277E055C009A1E5D /* 25.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 25.challenge.txt; sourceTree = "<group>"; };
 		37172191275CF36A006DCCE4 /* Day05_Hydrothermal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day05_Hydrothermal.swift; sourceTree = "<group>"; };
 		37172193275CF3DB006DCCE4 /* 05.test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.test.txt; sourceTree = "<group>"; };
 		37172194275CF400006DCCE4 /* 05.challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 05.challenge.txt; sourceTree = "<group>"; };
@@ -320,6 +328,8 @@
 				37CD0450277368E600E14CAF /* 22.challenge.txt */,
 				37818C36277955A80056602C /* 24.test.txt */,
 				37818C37277955B50056602C /* 24.challenge.txt */,
+				3716269C277E054D009A1E5D /* 25.test.txt */,
+				3716269D277E055C009A1E5D /* 25.challenge.txt */,
 			);
 			path = "Input Files";
 			sourceTree = "<group>";
@@ -351,6 +361,7 @@
 				37CD044D277368BB00E14CAF /* Day22_ReactorReboot.swift */,
 				37B1AEEF2774EE8F00F5B400 /* Day 23_Amphipod.swift */,
 				37818C34277955450056602C /* Day24_ArithmeticLU.swift */,
+				3716269A277E053D009A1E5D /* Day25_SeaCucumber.swift */,
 			);
 			path = Solutions;
 			sourceTree = "<group>";
@@ -420,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37D515D62760F13C00FE040C /* Day08_SevenSegment.swift in Sources */,
+				3716269B277E053D009A1E5D /* Day25_SeaCucumber.swift in Sources */,
 				37778B5827678E2C0011DBB1 /* Day13_Origami.swift in Sources */,
 				3794F38C276F74E700A88149 /* Day19_BeaconScanner.swift in Sources */,
 				370A4A8F2738312D00C003F9 /* main.swift in Sources */,
