@@ -40,3 +40,7 @@ Days 14 to 16 have been a tough series. Day 14: had to look up the answer. Day 1
 ## Days 22 and 23: Where the Music Died
 
 Maybe when I've got some distance from these two days I'll be okay with it, but I got stuck on both of these days and it took too long to solve them. Day 22 (Reactor) was a problem I could visualize but then solving took me into Dec. 23. Then Day 23 (Amphipod) had a couple of bugs hiding in my code that took forever to hunt down. I was going through the solution and re-writing or re-factoring code, trying to find the bug. Turns out there were two off-by-one errors that sank me. Now here I am on Boxing Day and I will start Day 24 tomorrow.
+
+## The End
+
+...and then Day 24 (Arithmetic Logic Unit) was a complete show-stopper for me. I put AoC aside completely for a day when it was clear that brute force wasn't going to be possible. But AoC pulls you back in. First I revisited the code for fun to optimize the brute-force solution and even multi-thread it. I maxed out all 8 cores on my M1 in testing, but I calculated it would take about 2400 days to run. Then I solved Day 25 (Sea Cucumbers) and that got me to the point where only Day 24 remained. I make no apologies for going to Reddit to find a solution that I could run & translate into Swift. Doing the translation and the extra brute-force optimization totally deserves two stars in my book!
