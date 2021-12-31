@@ -15,13 +15,84 @@ struct ArithmeticLogic:AoCSolution {
 	
 	static func solve(filename: String) {
 		print("\nDay 24 (ALU) -> \(filename)")
-		let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
-
-		let modelNumber = solvePartOne(input)
 		
+		//let input = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
+		//let modelNumber = solveBruteForce(input)
+		//print(validModelNumbers)
+		
+		let groupedInput = AOCUtil.readGroupedInputFile(named: filename)
+		var modelNumber = solveSmart(groupedInput, part: 1)
+
 		print("Part One")
 		print("The largest model number is: \(modelNumber)")
 
+		modelNumber = solveSmart(groupedInput, part: 2)
+
+		print("Part Two")
+		print("The smallest model number is: \(modelNumber)")
+	}
+	
+	static func solveSmart(_ groupedInput: [[String]], part: Int) -> Int {
+		var groupedInstructions = [[ALU.Instruction]]()
+		for gi in groupedInput {
+			groupedInstructions.append(parseInstructions(input: gi))
+		}
+		let magicNumbers = getMagicNumbers(groupedInstructions)
+		var zs = Set<Int>(arrayLiteral: 0)
+		var result = Dictionary<Int, [Int]>()
+		var ws = AOCUtil.cRangeToArray(r: 1...9)
+		if part == 2 {
+			ws = AOCUtil.cRangeToArray(r: 1...9).reversed()
+		}
+		for magic in magicNumbers.reversed() {
+			var newzs = Set<Int>()
+			for (w,z) in product(ws,zs) {
+				let z0s = backward(magic.a, magic.b, magic.c, z, w)
+				for z0 in z0s {
+					newzs.insert(z0)
+					if result.keys.contains(z) == false {
+						result[z] = [Int]()
+					}
+					var temp = [w]
+					temp.append(contentsOf: result[z]!)
+					result[z0] = temp
+				}
+			}
+			zs = newzs
+		}
+		let str = result[0]!.map({String($0)}).joined()
+		return Int(str)!
+	}
+	
+	static func getMagicNumbers(_ groupedInstructions: [[ALU.Instruction]]) -> [(a: Int, b: Int, c: Int)] {
+		var numbers = [(a: Int, b: Int, c: Int)]()
+		for g in groupedInstructions {
+			numbers.append((g[5].bValue!, g[15].bValue!, g[4].bValue!))
+		}
+		return numbers
+	}
+	
+	
+	private static func backward(_ A: Int, _ B: Int, _ C: Int, _ z2: Int, _ w: Int) -> [Int] {
+		// The possible values of z before a single block
+		// if the final value of z is z2 and w is w"""
+		var zs = [Int]()
+		let x = z2 - w - B
+		if x % 26 == 0 {
+			// code used python // operator https://www.w3schools.com/python/trypython.asp?filename=demo_oper_floordiv
+			var dividend = x / 26
+			if (x < 0) && (x.isMultiple(of: 2) == false) {
+				dividend -= 1
+			} // to align with python operator behavior, but never happens
+			zs.append(dividend * C)
+		}
+		if 0 <= w-A && w-A < 26 {
+			let z0 = z2 * C
+			zs.append(w-A+z0)
+		}
+		
+		//print("backward(\(A),\(B),\(C),\(z2),\(w)) returned \(zs)")
+		return zs
 	}
 	
 	/*
@@ -32,9 +103,10 @@ struct ArithmeticLogic:AoCSolution {
 	 Changed registers to array: 2.48
 	 DispatchQueues: 2.6s to do 4x the work
 	 DispatchQueues: 3.9s to do 8x the work
+	 Would theoretically take abou 2,400 days on mini13
 	 */
 	
-	static func solvePartOne(_ input: [String]) -> Int {
+	static func solveBruteForce(_ input: [String]) -> Int {
 		let program = parseInstructions(input: input)
 		var workItems = [DispatchWorkItem]()
 		for threadNumber in 1...8 {

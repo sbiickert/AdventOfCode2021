@@ -114,7 +114,7 @@ print("Advent of Code 2021")
 
 // Day 25
 //SeaCucumber.solve(filename: "25.test")
-SeaCucumber.solve(filename: "25.challenge")
+//SeaCucumber.solve(filename: "25.challenge")
 
 private func testInput(filename: String) {
 	let lines = AOCUtil.readInputFile(named: filename, removingEmptyLines: true)
