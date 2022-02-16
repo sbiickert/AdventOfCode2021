@@ -3,11 +3,13 @@
 use Modern::Perl '2018';
 use autodie;
 
-#solve_part_one('../AdventOfCode2021/Input Files/01.test.txt');
-solve_part_one('../AdventOfCode2021/Input Files/01.challenge.txt');
+my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
-#solve_part_two('../AdventOfCode2021/Input Files/01.test.txt');
-solve_part_two('../AdventOfCode2021/Input Files/01.challenge.txt');
+solve_part_one("$INPUT_PATH/01.test.txt");
+#solve_part_one("$INPUT_PATH/01.challenge.txt");
+
+solve_part_two("$INPUT_PATH/01.test.txt");
+#solve_part_two("$INPUT_PATH/01.challenge.txt");
 
 exit(0);
 
@@ -34,7 +36,7 @@ sub solve_part_one {
 }
 
 sub solve_part_two {
-	my ($input_file) = @_;
+	my $input_file = shift;
 	my $increase_count = 0;
 	
 	open my $input, '<', $input_file or die "Open failed: $!";
