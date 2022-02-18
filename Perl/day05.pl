@@ -3,7 +3,7 @@
 use Modern::Perl;
 use autodie;
 use Data::Dumper;
-use List::Util qw(min max);
+use List::Util 'max';
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
