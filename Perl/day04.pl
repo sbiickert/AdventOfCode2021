@@ -52,13 +52,11 @@ sub parse_input {
 }
 
 sub solve_parts {
-	my $ref = shift;
-	my %input = %$ref;
-	my $aref = $input{'draws'};
-	my @draws = @$aref;
+	my $input_ref = shift;
+	my %input = %$input_ref;
+	my @draws = @{$input{'draws'}};
 	
-	$aref = $input{'boards'};
-	my @remaining_boards = @$aref;
+	my @remaining_boards = @{$input{'boards'}};
 	
 	for my $draw (@draws) {
 		my @boards = @remaining_boards;
@@ -69,7 +67,7 @@ sub solve_parts {
 			if (board_is_winner( $board_ref )) {
 				my $score = score_board( $board_ref );
 				print "Winning score: $score * $draw = ". $score*$draw."\n";
-				print_board( $board_ref );
+				#print_board( $board_ref );
 			}
 			else {
 				push(@remaining_boards, $board_ref);
