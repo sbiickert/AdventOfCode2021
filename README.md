@@ -44,3 +44,7 @@ Maybe when I've got some distance from these two days I'll be okay with it, but 
 ## The End
 
 ...and then Day 24 (Arithmetic Logic Unit) was a complete show-stopper for me. I put AoC aside completely for a day when it was clear that brute force wasn't going to be possible. But AoC pulls you back in. First I revisited the code for fun to optimize the brute-force solution and even multi-thread it. I maxed out all 8 cores on my M1 in testing, but I calculated it would take about 2400 days to run. Then I solved Day 25 (Sea Cucumbers) and that got me to the point where only Day 24 remained. I make no apologies for going to Reddit to find a solution that I could run & translate into Swift. Doing the translation and the extra brute-force optimization totally deserves two stars in my book!
+
+## Beyond The End
+ 
+Now I'm using AoC 2021 to work on some other languages. I think I've done as much Pascal as I want for now, so I've switched to refreshing my Perl skills. Five days done. At first my memory of how to properly dereference variables was so dim that every time was a struggle. But day05.pl didn't take nearly as long. Thanks [Impatient Perl](https://www.perl.org/books/impatient-perl/)!
