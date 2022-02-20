@@ -3,6 +3,8 @@
 use Modern::Perl;
 use autodie;
 use Data::Dumper;
+use List::Util 'reduce';
+
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
@@ -13,11 +15,12 @@ my @offsets = (
 my @test_input = parse_input("$INPUT_PATH/09.test.txt");
 my @real_input = parse_input("$INPUT_PATH/09.challenge.txt");
 
-solve_part_one(\@test_input);
-solve_part_one(\@real_input);
+my @lows;
+#@lows = solve_part_one(\@test_input);
+@lows = solve_part_one(\@real_input);
 
-#solve_part_two(@test_input);
-#solve_part_two(@real_input);
+#solve_part_two(\@test_input, \@lows);
+solve_part_two(\@real_input, \@lows);
 
 
 exit( 0 );
@@ -58,17 +61,39 @@ sub solve_part_one {
 	
 	say "Part One";
 	say "The sum of the low point values is $sum";
+	
+	return @lows;
+}
+
+sub solve_part_two {
+	my ($grid_ref, $lows_ref) = @_;
+	my @grid = @$grid_ref;
+	my @lows = @$lows_ref;
+	my %size = ('y' => scalar @grid, 'x' => scalar @{$grid[0]});
+	
+	my @basin_areas;
+	for my $low (@lows) {
+		my %visited;
+		measure_basin($low, \@grid, \%size, \%visited);
+		push(@basin_areas, scalar keys %visited);
+	}
+	
+	@basin_areas = sort { $b <=> $a } @basin_areas; #reverse sort
+	my $product = reduce { $a * $b } @basin_areas[0..2];
+	
+	say "Part Two";
+	say "The product of the sizes of the three largest basins is is $product";
 }
 
 sub count_lower_neighbors {
-	my ($grid_ref, $coords_ref, $size) = @_;
+	my ($grid_ref, $coords_ref, $size_ref) = @_;
 	my $value = $grid_ref->[$coords_ref->{'row'}][$coords_ref->{'col'}];
 	if ($value == 9) {
 		return 4;
 	}
 	my $count = 0;
-	my $rmax = $size->{'y'};
-	my $cmax = $size->{'x'};
+	my $rmax = $size_ref->{'y'};
+	my $cmax = $size_ref->{'x'};
 	
 	for my $offset (@offsets) {
 		my ($dr, $dc) = @$offset;
@@ -81,6 +106,25 @@ sub count_lower_neighbors {
 	return $count;
 }
 
-sub solve_part_two {
-	my $input = shift;
+sub measure_basin {
+	my( $coords_ref, $grid_ref, $size_ref, $visited_ref ) = @_;
+	
+	# Marking that we've been here
+	my $key = $coords_ref->{'row'} . ',' . $coords_ref->{'col'};
+	$visited_ref->{$key} = 1;
+	
+	my $rmax = $size_ref->{'y'};
+	my $cmax = $size_ref->{'x'};
+	
+	for my $offset (@offsets) {
+		my ($dr, $dc) = @$offset;
+		my ($r, $c) = ($coords_ref->{'row'}+$dr, $coords_ref->{'col'}+$dc);
+		if ($r >= 0 and $c >= 0 and $r < $rmax and $c < $cmax) {
+			$key = $r . ',' . $c;
+			if (!exists $visited_ref->{$key} && $grid_ref->[$r][$c] < 9) {
+				my %neighbor = ('row' => $r, 'col' => $c);
+				measure_basin(\%neighbor, $grid_ref, $size_ref, $visited_ref);
+			}
+		}
+	}
 }
