@@ -13,13 +13,14 @@ my @real_input = parse_input("$INPUT_PATH/10.challenge.txt");
 my @open_brackets = ('(', '[', '{', '<');
 my @close_brackets = (')', ']', '}', '>');
 my @err_points = (3, 57, 1197, 25137);
+my @comp_points = (1, 2, 3, 4);
 
 my @incompletes;
 #@incompletes = solve_part_one(@test_input);
 @incompletes = solve_part_one(@real_input);
 
-#solve_part_two(@test_input);
-#solve_part_two(@real_input);
+#solve_part_two(@incompletes);
+solve_part_two(@incompletes);
 
 
 exit( 0 );
@@ -45,8 +46,8 @@ sub solve_part_one {
 		chomp;
 		my %result = evaluate($_);
 		$score += $result{'score'};
-		if ($result{'score'} > 0) {
-			push(@incompletes, \$result{'stack'});
+		if ($result{'score'} == 0) {
+			push(@incompletes, $result{'stack'});
 		}
 	}
 	
@@ -90,5 +91,36 @@ sub is_open {
 }
 
 sub solve_part_two {
-	my $input = shift;
+	my @incompletes = @_;
+	my @scores;
+	
+	for (@incompletes) {
+		my $score = complete($_);
+		push(@scores, $score);
+	}
+	
+	@scores = sort {$a <=> $b} @scores;
+	my $mid = $#scores / 2;
+	
+	say "Part Two";
+	say "The middle score is $scores[$mid]";
+}
+
+sub complete {
+	my $stack_ref = shift;
+	my @rev_stack = reverse @{$stack_ref};
+	my $score = 0;
+	my @closing_stack;
+	
+	#say join(' ', @rev_stack);
+	for my $open (@rev_stack) {
+		my $index = first { $open_brackets[$_] eq $open } 0..3;
+		$score *= 5;
+		$score += $comp_points[$index];
+		push(@closing_stack, $close_brackets[$index]);
+	}
+	#say join(' ', @closing_stack);
+	#say $score;
+
+	return $score;
 }
