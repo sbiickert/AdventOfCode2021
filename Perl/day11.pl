@@ -9,15 +9,15 @@ my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 my @test_input = parse_input("$INPUT_PATH/11.test.txt");
 my @real_input = parse_input("$INPUT_PATH/11.challenge.txt");
 
-solve_part_one(@test_input);
-#solve_part_one(@real_input);
+#solve_part_one(@test_input);
+solve_part_one(@real_input);
 
 # Reload data
 @test_input = parse_input("$INPUT_PATH/11.test.txt");
 @real_input = parse_input("$INPUT_PATH/11.challenge.txt");
 
-solve_part_two(@test_input);
-#solve_part_two(@real_input);
+#solve_part_two(@test_input);
+solve_part_two(@real_input);
 
 
 exit( 0 );
@@ -56,6 +56,16 @@ sub solve_part_one {
 
 sub solve_part_two {
 	my @grid = @_;
+	my $iter_count = 0;
+	
+	while (1) {
+		$iter_count++;
+		my $flash_count += iterate(@grid);
+		last if $flash_count == 100;
+	}
+	
+	say "Part Two";
+	say "The number of iterations until all octopi flash is $iter_count";
 }
 
 sub iterate {
