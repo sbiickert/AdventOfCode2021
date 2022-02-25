@@ -95,7 +95,7 @@ sub solve_part {
 				$lowest_cost_node = $node;
 			}
 		}
-		
+			
 		$here = $lowest_cost_node;
 	}
 	
@@ -118,7 +118,7 @@ sub expand_grid {
 	my $factor = shift;
 	my $size = scalar @grid;
 	
-	# Expand horizontally
+	# Expand horizontally and vertically
 	for my $r (0..$size-1) {
 		for my $c (0..$size-1) {
 			for my $i (0..$factor-1) {
