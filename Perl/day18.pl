@@ -3,6 +3,7 @@
 use Modern::Perl;
 use autodie;
 use Data::Dumper;
+use Algorithm::Combinatorics qw(combinations);
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
@@ -13,11 +14,9 @@ my @input = parse_input("$INPUT_PATH/$INPUT_FILE");
 
 for my $sn_equation_ref (@input) {
 	solve_part_one(@$sn_equation_ref);
-	say "-------------------------------"
 }
 
-#solve_part_two(@input);
-
+solve_part_two(@{$input[-1]}); # last test input, challenge input
 
 exit( 0 );
 
@@ -67,6 +66,24 @@ sub solve_part_one {
 
 sub solve_part_two {
 	my @input = @_;
+
+	my $max = 0;
+	my $iter = combinations(\@input, 2);
+	while (my $combo = $iter->next) {
+		my $sum = add_sfnums($combo->[0], $combo->[1]);
+		reduce(\$sum);
+		my $mag = calc_magnitude($sum);
+		$max = $mag if $mag > $max;
+		# Snailfish addition is non-commutative. Redo with addends reversed.
+		$sum = add_sfnums($combo->[1], $combo->[0]);
+		reduce(\$sum);
+		$mag = calc_magnitude($sum);
+		$max = $mag if $mag > $max;
+		#say $max;
+	}
+	
+	say "Part Two";
+	say "The maximum magnitude is $max";
 }
 
 sub add_sfnums {
