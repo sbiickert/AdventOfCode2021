@@ -9,14 +9,14 @@ use Set::Scalar;
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
 #my $INPUT_FILE = '19.simple.txt';
-my $INPUT_FILE = '19.test.txt';
-#my $INPUT_FILE = '19.challenge.txt';
+#my $INPUT_FILE = '19.test.txt';
+my $INPUT_FILE = '19.challenge.txt';
 
 my %scanners = parse_input("$INPUT_PATH/$INPUT_FILE");
 
-solve_part_one();
+my @offsets = solve_part_one();
 
-#solve_part_two();
+solve_part_two(@offsets);
 
 
 exit( 0 );
@@ -55,38 +55,66 @@ sub solve_part_one {
 		$triangles{$k} = \@temp;
 	}
 	
-	my $iter = combinations(\@keys, 2);
-	while (my $combo = $iter->next) {
-		my $k0 = $combo->[0];
-		my @triangles0 = @{$triangles{$k0}};
-		my $triset0 = Set::Scalar->new();
-		$triset0->insert(map { $_->{'key'} } @triangles0);
-
-		my $k1 = $combo->[1];
-		my @triangles1 = @{$triangles{$k1}};
-		my $triset1 = Set::Scalar->new();
-		$triset1->insert(map { $_->{'key'} } @triangles1);
+	my $zero = shift @keys; 
+	my @transformed = ($zero); # zero is the frame of ref. Will add keys as scanners are transformed.
+	my @offsets; # For returning the scanner locations
 	
-		my $overlap = $triset0->intersection($triset1);
-		my $count = $overlap->size;
-		if ($count > 100) {
-			say "Scanners $k0 and $k1 overlap.";
-			# Choose a matching triangle
-			my @member_keys = $overlap->members;
-			my %transform;
-			for my $match_key (@member_keys) {
-				say $match_key;
-				#print Dumper(\@triangles0); 
-				my ($tri0) = grep { $_->{'key'} eq $match_key } @triangles0;
-				my ($tri1) = grep { $_->{'key'} eq $match_key } @triangles1;
-				%transform = find_transform($tri0->{'points'}, $tri1->{'points'});
-				last if ($transform{'orientation'} != -1);
+	while (scalar @keys > 0) {
+		for my $k0 (@transformed) {
+			for my $k1 (@keys) {
+		
+				my @triangles0 = @{$triangles{$k0}};
+				my $triset0 = Set::Scalar->new();
+				$triset0->insert(map { $_->{'key'} } @triangles0);
+
+				my @triangles1 = @{$triangles{$k1}};
+				my $triset1 = Set::Scalar->new();
+				$triset1->insert(map { $_->{'key'} } @triangles1);
+	
+				my $overlap = $triset0->intersection($triset1);
+				my $count = $overlap->size;
+				if ($count > 100) {
+					say "Scanners $k0 and $k1 overlap.";
+					# Choose a matching triangle
+					my @member_keys = $overlap->members;
+					my %transform;
+					for my $match_key (@member_keys) {
+						#say "+++ $match_key +++";
+						my ($tri0) = grep { $_->{'key'} eq $match_key } @triangles0;
+						my ($tri1) = grep { $_->{'key'} eq $match_key } @triangles1;
+						%transform = find_transform($tri0->{'points'}, $tri1->{'points'});
+						last if ($transform{'orientation'} != -1);
+					}
+					#print Dumper(\%transform);
+					die if $transform{'orientation'} == -1;
+					
+					transform_scanner($k1, \%transform);
+					push(@offsets, \%transform);
+					
+					# Rebuild triangles based on transformed points
+					my @temp = build_triangles($scanners{$k1});
+					$triangles{$k1} = \@temp;
+					
+					push(@transformed, $k1);
+					@keys = grep { $_ ne $k1 } @keys;
+				}
 			}
-			print Dumper(\%transform);
-			transform_scanner($k1, \%transform);
-			die;
 		}
 	}
+	
+	# At this point, all scanners should be in the 0 scanner frame of reference
+	@keys = sort keys %scanners;
+	my $coord_set = Set::Scalar->new();
+	for my $k (@keys) {
+		for my $pt (@{$scanners{$k}}) {
+			$coord_set->insert(join(',', @$pt));
+		}
+	}
+	
+	say 'Part One';
+	say "The number of unique beacons is " . $coord_set->size;
+	
+	return @offsets;
 }
 
 sub solve_part_two {
@@ -99,32 +127,35 @@ sub build_triangles {
 	
 	my $iter3 = combinations($pts3d_ref, 3);
 	while (my $combo3 = $iter3->next) {
-		my @points = @$combo3;
-		
-		my @sides;
-		my $iter2 = combinations($combo3, 2);
-		while (my $combo2 = $iter2->next) {
-			my @pt_offset = calc_point_offset($combo2->[0], $combo2->[1]);
-			my $dx = abs($pt_offset[0]);
-			my $dy = abs($pt_offset[1]);
-			my $dz = abs($pt_offset[2]);
-			my $len = sqrt($dx*$dx + $dy*$dy + $dz*$dz);
-			push(@sides, int($len));
-		}
-		@sides = sort {$a <=> $b} @sides;
-		
-		my %tri = (	'key' 		=> join(',', @sides),
-					'points' 	=> \@points);
+		my %tri = build_triangle(@$combo3);
 		push(@triangles, \%tri);
-		
 	}
 	@triangles = sort @triangles;
 }
 
+sub build_triangle {
+	my @points = @_;	
+	my @sides;
+	my $iter2 = combinations(\@points, 2);
+	while (my $combo2 = $iter2->next) {
+		my @pt_offset = calc_point_offset($combo2->[0], $combo2->[1]);
+		my $dx = abs($pt_offset[0]);
+		my $dy = abs($pt_offset[1]);
+		my $dz = abs($pt_offset[2]);
+		my $len = sqrt($dx*$dx + $dy*$dy + $dz*$dz);
+		push(@sides, int($len));
+	}
+	@sides = sort {$a <=> $b} @sides;
+	
+	my %tri = (	'key' 		=> join(',', @sides),
+				'points' 	=> \@points);
+	return %tri;
+}
+
 sub find_transform {
 	my ($tri1, $tri2) = @_;
-	print_triangle('$tri1', @{$tri1});
-	print_triangle('$tri2', @{$tri2});
+	#print_triangle('$tri1', @{$tri1});
+	#print_triangle('$tri2', @{$tri2});
 
 	my %result = ('orientation' => -1, 'rotation' => -1); # default, no result
 	
@@ -137,6 +168,8 @@ sub find_transform {
 			my @rotated_pt1 = rotate_point($rotation, $oriented_pt1[0], $oriented_pt1[1], $oriented_pt1[2]);
 			my @rotated_pt2 = rotate_point($rotation, $oriented_pt2[0], $oriented_pt2[1], $oriented_pt2[2]);
 			
+			#my %transformed = build_triangle(\@rotated_pt0, \@rotated_pt1, \@rotated_pt2);
+			#say $transformed{'key'};
 			my @offset = triangles_are_equal_but_offset($tri1->[0], $tri1->[1], $tri1->[2],
 												\@rotated_pt0, \@rotated_pt1, \@rotated_pt2 );
 			if (@offset) {
@@ -156,6 +189,11 @@ sub find_transform {
 sub transform_scanner {
 	my ($key, $tr) = @_;
 	
+	for my $pt (@{$scanners{$key}}) {
+		orient_point_ref($tr->{'orientation'}, $pt);
+		rotate_point_ref($tr->{'rotation'}, $pt);
+		translate_point_ref($tr->{'tx'}, $tr->{'ty'}, $tr->{'tz'}, $pt);
+	}
 }
 
 sub orient_point {
@@ -202,7 +240,6 @@ sub rotate_point {
 
 sub rotate_point_ref {
 	my ($rotation, $pt) = @_;
-	my ($x, $y, $z) = @$pt;
 	
 	# z is fixed
 	for (1..$rotation) {
@@ -210,9 +247,19 @@ sub rotate_point_ref {
 		# neg x becomes neg y
 		# pos y becomes neg x
 		# neg y becomes pos x
-		$pt->[0] = -$y;
-		$pt->[1] = $x;
+		my $temp = $pt->[0];
+		$pt->[0] = -$pt->[1];
+		$pt->[1] = $temp;
 	}
+}
+
+sub translate_point_ref {
+	my ($tx, $ty, $tz, $pt) = @_;
+	my ($x, $y, $z) = @$pt;
+	
+	$pt->[0] += $tx;
+	$pt->[1] += $ty;
+	$pt->[2] += $tz;
 }
 
 sub triangles_are_equal_but_offset {
