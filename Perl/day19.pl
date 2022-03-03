@@ -14,9 +14,9 @@ my $INPUT_FILE = '19.challenge.txt';
 
 my %scanners = parse_input("$INPUT_PATH/$INPUT_FILE");
 
-my @offsets = solve_part_one();
+my %transforms = solve_part_one();
 
-solve_part_two(@offsets);
+solve_part_two();
 
 
 exit( 0 );
@@ -57,7 +57,7 @@ sub solve_part_one {
 	
 	my $zero = shift @keys; 
 	my @transformed = ($zero); # zero is the frame of ref. Will add keys as scanners are transformed.
-	my @offsets; # For returning the scanner locations
+	my %transforms; # For returning the scanner locations
 	
 	while (scalar @keys > 0) {
 		for my $k0 (@transformed) {
@@ -74,7 +74,7 @@ sub solve_part_one {
 				my $overlap = $triset0->intersection($triset1);
 				my $count = $overlap->size;
 				if ($count > 100) {
-					say "Scanners $k0 and $k1 overlap.";
+					#say "Scanners $k0 and $k1 overlap.";
 					# Choose a matching triangle
 					my @member_keys = $overlap->members;
 					my %transform;
@@ -89,7 +89,7 @@ sub solve_part_one {
 					die if $transform{'orientation'} == -1;
 					
 					transform_scanner($k1, \%transform);
-					push(@offsets, \%transform);
+					$transforms{$k1} = \%transform;
 					
 					# Rebuild triangles based on transformed points
 					my @temp = build_triangles($scanners{$k1});
@@ -114,10 +114,27 @@ sub solve_part_one {
 	say 'Part One';
 	say "The number of unique beacons is " . $coord_set->size;
 	
-	return @offsets;
+	return %transforms;
 }
 
 sub solve_part_two {
+	my @keys = sort keys %transforms;
+	my $max_manhattan_dist = 0;
+	
+	my $iter = combinations(\@keys, 2);
+	while (my $combo = $iter->next) {
+		my %t0 = %{$transforms{$combo->[0]}};
+		my %t1 = %{$transforms{$combo->[1]}};
+		
+		my @pt0 = ($t0{'tx'}, $t0{'ty'}, $t0{'tz'});
+		my @pt1 = ($t1{'tx'}, $t1{'ty'}, $t1{'tz'});
+		my $manhattan_dist = calc_manhattan_3d(\@pt0, \@pt1);
+		#say join(',', @$combo) . " --> $manhattan_dist";
+		$max_manhattan_dist = $manhattan_dist if $manhattan_dist > $max_manhattan_dist;
+	}
+	
+	say 'Part Two';
+	say "The max Manhattan distance is $max_manhattan_dist";
 }
 
 # Getting the side lengths of all triangles in a scanner
@@ -289,6 +306,16 @@ sub calc_point_offset {
 	my $dz = $pt1->[2] - $pt2->[2];
 
 	return ($dx, $dy, $dz);
+}
+
+sub calc_manhattan_3d {
+	my ($pt0, $pt1) = @_;
+	
+	my $mdx = abs($pt0->[0] - $pt1->[0]);
+	my $mdy = abs($pt0->[1] - $pt1->[1]);
+	my $mdz = abs($pt0->[2] - $pt1->[2]);
+	
+	return $mdx + $mdy + $mdz;
 }
 
 sub print_triangle {
