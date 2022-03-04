@@ -117,7 +117,11 @@ sub filter {
 	}
 	
 	#say join('', @{$clip[0]}, @{$clip[1]}, @{$clip[2]} );
-	my $value = to_dec( @{$clip[0]}, @{$clip[1]}, @{$clip[2]} );
+	
+	# NYTProf showed this was 3 times slower in fact!
+	#my $value = to_dec( @{$clip[0]}, @{$clip[1]}, @{$clip[2]} );
+	
+	my $value = oct('0b'. join('', @{$clip[0]}, @{$clip[1]}, @{$clip[2]}));
 	
 	return $filter[$value];
 }
