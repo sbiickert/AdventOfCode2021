@@ -43,7 +43,7 @@ sub solve_part_one {
 		last if $scores[1] >= $WIN;
 	}
 	
-	my @winner = sort @scores; # (winning score, losing score)
+	my @winner = reverse sort { $a <=> $b } @scores; # (winning score, losing score)
 	my $answer = $winner[1] * $num_rolls; # loser * rolls
 	
 	say 'Part One';
