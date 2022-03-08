@@ -3,19 +3,21 @@
 use Modern::Perl;
 use autodie;
 use Data::Dumper;
+use Storable 'dclone';
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
-#my $INPUT_FILE = '22.test.txt';
-my $INPUT_FILE = '22.challenge.txt';
+my $INPUT_FILE = '22.test.txt';
+#my $INPUT_FILE = '22.challenge.txt';
 
 my @instruction_sets = parse_input("$INPUT_PATH/$INPUT_FILE");
 
-for my $instruction_set (@instruction_sets) {
-	solve_part_one(@$instruction_set);
-}
+# for my $instruction_set (@instruction_sets) {
+#  	solve_part_one(@$instruction_set);
+# }
 
-solve_part_two($instruction_sets[-1]);
+my $p1_cube_count = solve_part_one( @{$instruction_sets[-1]} );
+solve_part_two( $p1_cube_count, @{$instruction_sets[-1]} );
 
 
 exit( 0 );
@@ -85,21 +87,6 @@ sub solve_part_one {
 	say "The number of lit cubes is $lit_count";
 }
 
-sub solve_part_two {
-	my @input = @_;
-}
-
-sub instruction_is_init {
-	my $i_ref = shift;
-
-	return abs($i_ref->{'vol'}{'xmin'}) <= 50 &&
-			abs($i_ref->{'vol'}{'xmax'}) <= 50 &&
-			abs($i_ref->{'vol'}{'ymin'}) <= 50 &&
-			abs($i_ref->{'vol'}{'ymax'}) <= 50 &&
-			abs($i_ref->{'vol'}{'zmin'}) <= 50 &&
-			abs($i_ref->{'vol'}{'zmax'}) <= 50;
-}
-
 sub cubes_in_volume {
 	my $v_ref = shift;
 	my @cubes;
@@ -112,4 +99,241 @@ sub cubes_in_volume {
 		}
 	}
 	return @cubes;
+}
+
+sub solve_part_two {
+	my ($init_cube_count, @instructions) = @_;
+	my @core_volumes;
+	
+	for my $instr (@instructions) {
+		next if instruction_is_init($instr);
+		
+		my $vol = $instr->{'vol'};
+		
+		my $repeat = 1;
+		while ($repeat) {
+			$repeat = 0;
+			
+			for my $core_idx (0..$#core_volumes) {
+				my $core_vol = $core_volumes[$core_idx];
+				
+				if ( volumes_overlap($vol, $core_vol) ) {
+					
+					# Remove $core_vol from @core_volumes
+					splice(@core_volumes, $core_idx, 1);
+
+					# If $core_vol isn't fully contained by $vol, need to slice it up
+					if ( !volume_contains( $vol, $core_vol ) ) {
+						my $inter = intersect_volumes($vol, $core_vol);
+						
+						my @frags = split_volume($core_vol, $inter);
+						
+						# Sanity check -- $inter should be one of the fragments
+						my $frags_contains_inter = grep { volumes_equal($_, $inter) } @frags;
+						
+						# Sanity check -- do the # cubes of the fragments equal the original
+						my $sum_frag_counts = 0;
+						for my $f (@frags) {
+							$sum_frag_counts += count_cubes_in_volume( $f );
+						}
+						my $check_counts = count_cubes_in_volume($core_vol) == $sum_frag_counts;
+						
+						if (!$check_counts or !$frags_contains_inter) {
+							# Failed sanity checks
+							say "Check counts: $check_counts";
+							say "Intersection in fragments: $frags_contains_inter";
+							print Dumper($vol, $core_vol, $inter);
+							die;
+						}
+						
+						for my $f (@frags) {
+							push(@core_volumes, $f) if !volumes_equal($f, $inter);
+						}
+					}
+					
+					$repeat = 1;
+					last;
+				}
+			}
+		}
+		
+		push( @core_volumes, $vol ) if $instr->{'on'};
+	}
+	
+	my $lit_count = $init_cube_count;
+	for my $vol (@core_volumes) {
+		$lit_count += count_cubes_in_volume($vol);
+	}
+	say 'Part Two';
+	say "The number of lit cubes is $lit_count";
+}
+
+sub instruction_is_init {
+	my $i_ref = shift;
+
+	#print Dumper($i_ref);
+	return abs($i_ref->{'vol'}{'xmin'}) <= 50 &&
+			abs($i_ref->{'vol'}{'xmax'}) <= 50 &&
+			abs($i_ref->{'vol'}{'ymin'}) <= 50 &&
+			abs($i_ref->{'vol'}{'ymax'}) <= 50 &&
+			abs($i_ref->{'vol'}{'zmin'}) <= 50 &&
+			abs($i_ref->{'vol'}{'zmax'}) <= 50;
+}
+
+sub volumes_equal {
+	my ($v1, $v2) = @_;
+	
+	return $v1->{'xmin'} == $v2->{'xmin'} &&
+			$v1->{'xmax'} == $v2->{'xmax'} && 
+			$v1->{'ymin'} == $v2->{'ymin'} &&
+			$v1->{'ymax'} == $v2->{'ymax'} && 
+			$v1->{'zmin'} == $v2->{'zmin'} &&
+			$v1->{'zmax'} == $v2->{'zmax'};
+}
+
+sub volumes_overlap {
+	my ($v1, $v2) = @_;
+	
+	my $x_overlap = is_number_between($v1->{'xmin'}, $v2->{'xmin'}, $v2->{'xmax'}) ||
+					is_number_between($v1->{'xmax'}, $v2->{'xmin'}, $v2->{'xmax'});
+	my $y_overlap = is_number_between($v1->{'ymin'}, $v2->{'ymin'}, $v2->{'ymax'}) ||
+					is_number_between($v1->{'ymax'}, $v2->{'ymin'}, $v2->{'ymax'});
+	my $z_overlap = is_number_between($v1->{'zmin'}, $v2->{'zmin'}, $v2->{'zmax'}) ||
+					is_number_between($v1->{'zmax'}, $v2->{'zmin'}, $v2->{'zmax'});
+	
+	return $x_overlap && $y_overlap && $z_overlap;
+}
+
+sub volume_contains {
+	my ($container, $vol) = @_;
+	
+	my $x_contains = is_number_between($vol->{'xmin'}, $container->{'xmin'}, $container->{'xmax'}) &&
+					 is_number_between($vol->{'xmax'}, $container->{'xmin'}, $container->{'xmax'});
+	my $y_contains = is_number_between($vol->{'ymin'}, $container->{'ymin'}, $container->{'ymax'}) &&
+					 is_number_between($vol->{'ymax'}, $container->{'ymin'}, $container->{'ymax'});
+	my $z_contains = is_number_between($vol->{'zmin'}, $container->{'zmin'}, $container->{'zmax'}) &&
+					 is_number_between($vol->{'zmax'}, $container->{'zmin'}, $container->{'zmax'});
+	
+	return $x_contains && $y_contains && $z_contains;
+}
+
+sub is_number_between {
+	my ($num, $low, $high) = @_;
+	
+	return $low <= $num && $num <= $high;
+}
+
+sub intersect_volumes {
+	my ($v1, $v2) = @_;
+	
+	# Larger of min values
+	my $xmin = $v1->{'xmin'} < $v2->{'xmin'} ? $v2->{'xmin'} : $v1->{'xmin'};
+	my $ymin = $v1->{'ymin'} < $v2->{'ymin'} ? $v2->{'ymin'} : $v1->{'ymin'};
+	my $zmin = $v1->{'zmin'} < $v2->{'zmin'} ? $v2->{'zmin'} : $v1->{'zmin'};
+	
+	# Smaller of max values
+	my $xmax = $v1->{'xmax'} > $v2->{'xmax'} ? $v2->{'xmax'} : $v1->{'xmax'};
+	my $ymax = $v1->{'ymax'} > $v2->{'ymax'} ? $v2->{'ymax'} : $v1->{'ymax'};
+	my $zmax = $v1->{'zmax'} > $v2->{'zmax'} ? $v2->{'zmax'} : $v1->{'zmax'};
+	
+	return { 'xmin' => $xmin, 'xmax' => $xmax,
+			 'ymin' => $ymin, 'ymax' => $ymax,
+			 'zmin' => $zmin, 'zmax' => $zmax };
+}
+
+sub count_cubes_in_volume {
+	my $vol = shift;
+	
+	my $dx = $vol->{'xmax'} - $vol->{'xmin'};
+	my $dy = $vol->{'xmax'} - $vol->{'xmin'};
+	my $dz = $vol->{'xmax'} - $vol->{'xmin'};
+	
+	return $dx * $dy * $dz;
+}
+
+sub split_volume {
+	my ($vol, $other) = @_;
+	my @frags = ($vol);
+	my @cleave_results;
+	
+	for my $frag (@frags) {
+		my @temp = cleave_volume_at_x($frag, $other->{'xmin'}, 0);
+		push(@cleave_results, @temp);
+		print Dumper(\@temp, \@cleave_results);
+	}
+	@frags = dclone(\@cleave_results);
+	@cleave_results = ();
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_x($frag, $other->{'xmax'}, 1)); }
+	@frags = dclone(\@cleave_results);
+	@cleave_results = ();
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_y($frag, $other->{'ymin'}, 0)); }
+	@frags = dclone(\@cleave_results);
+	@cleave_results = ();
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_y($frag, $other->{'ymax'}, 1)); }
+	@frags = dclone(\@cleave_results);
+	@cleave_results = ();
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_z($frag, $other->{'zmin'}, 0)); }
+	@frags = dclone(\@cleave_results);
+	@cleave_results = ();
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_z($frag, $other->{'zmax'}, 1)); }
+
+	return @cleave_results;
+}
+
+sub cleave_volume_at_x {
+	my ($vol, $value, $is_greedy) = @_;
+	
+	print Dumper( $vol, $value );
+	my $min = $vol->{'xmin'};
+	my $max = $vol->{'xmax'};
+	
+	my $split1 = $is_greedy ? $value : $value-1;
+	my $split2 = $is_greedy ? $value+1 : $value;
+	
+	my $v1 = { 'xmin' => $min, 			 'xmax' => $split1,
+			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'},
+			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
+	my $v2 = { 'xmin' => $split2, 		 'xmax' => $max,
+			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'},
+			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
+	
+	return ($v1, $v2);
+}
+
+sub cleave_volume_at_y {
+	my ($vol, $value, $is_greedy) = @_;
+	
+	my $min = $vol->{'ymin'};
+	my $max = $vol->{'ymax'};
+	
+	my $split1 = $is_greedy ? $value : $value-1;
+	my $split2 = $is_greedy ? $value+1 : $value;
+	
+	my $v1 = { 'ymin' => $min, 			 'ymax' => $split1,
+			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
+			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
+	my $v2 = { 'ymin' => $split2, 		 'ymax' => $max,
+			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
+			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
+	
+	return ($v1, $v2);
+}
+
+sub cleave_volume_at_z {
+	my ($vol, $value, $is_greedy) = @_;
+	
+	my $min = $vol->{'zmin'};
+	my $max = $vol->{'zmax'};
+	
+	my $split1 = $is_greedy ? $value : $value-1;
+	my $split2 = $is_greedy ? $value+1 : $value;
+	
+	my $v1 = { 'zmin' => $min, 			 'zmax' => $split1,
+			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
+			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'} };
+	my $v2 = { 'zmin' => $split2, 		 'zmax' => $max,
+			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
+			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'} };
+	
+	return ($v1, $v2);
 }
