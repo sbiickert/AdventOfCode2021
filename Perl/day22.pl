@@ -5,7 +5,7 @@ use autodie;
 use Data::Dumper;
 use Storable 'dclone';
 use Algorithm::Combinatorics 'combinations';
-#use bignum;
+use Math::BigInt;
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
@@ -87,6 +87,7 @@ sub solve_part_one {
 	my $lit_count = scalar keys %reactor;
 	say 'Part One';
 	say "The number of lit cubes is $lit_count";
+	return $lit_count;
 }
 
 sub cubes_in_volume {
@@ -158,9 +159,9 @@ sub solve_part_two {
 								}
 								push(@core_volumes, $f);
 							}
-							else {
-								say "-" . count_cubes_in_volume($inter);
-							}
+# 							else {
+# 								say "-" . count_cubes_in_volume($inter);
+# 							}
 						}
 					}
 					
@@ -176,17 +177,19 @@ sub solve_part_two {
 	}
 	
 	# Another sanity check
-	my $iter = combinations(\@core_volumes, 2);
-	while (my $combo = $iter->next) {
-		if (volumes_overlap($combo->[0], $combo->[1])) {
-			print_volumes($combo->[0], $combo->[1]);
-			die;
-		}
-	}
+# 	my $iter = combinations(\@core_volumes, 2);
+# 	while (my $combo = $iter->next) {
+# 		if (volumes_overlap($combo->[0], $combo->[1])) {
+# 			print_volumes($combo->[0], $combo->[1]);
+# 			die;
+# 		}
+# 	}
 	
-	my $lit_count = -$init_cube_count;
+	my $lit_count = Math::BigInt->new(-$init_cube_count);
+	#my $lit_count = Math::BigInt->new('0');
 	for my $vol (@core_volumes) {
-		$lit_count += count_cubes_in_volume($vol);
+		my $cubes = count_cubes_in_volume($vol);
+		$lit_count += $cubes;
 	}
 	say 'Part Two';
 	say "The number of lit cubes is $lit_count";
@@ -304,7 +307,6 @@ sub split_volume {
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_z($frag, $other->{'zmax'}, 1)); }
 
-# 	die;
 	return @cleave_results;
 }
 
