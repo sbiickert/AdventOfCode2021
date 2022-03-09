@@ -221,10 +221,11 @@ sub volumes_overlap {
 	my ($v1, $v2) = @_;
 	
 	my $x_overlap = ranges_overlap($v1->{'xmin'}, $v1->{'xmax'}, $v2->{'xmin'}, $v2->{'xmax'});
+	return 0 if !$x_overlap; #short circuiting
 	my $y_overlap = ranges_overlap($v1->{'ymin'}, $v1->{'ymax'}, $v2->{'ymin'}, $v2->{'ymax'});
+	return 0 if !$y_overlap; #short circuiting
 	my $z_overlap = ranges_overlap($v1->{'zmin'}, $v1->{'zmax'}, $v2->{'zmin'}, $v2->{'zmax'});
-
-	return $x_overlap && $y_overlap && $z_overlap;
+	return $z_overlap
 }
 
 sub ranges_overlap {
