@@ -4,6 +4,7 @@ use Modern::Perl;
 use autodie;
 use Data::Dumper;
 use Storable 'dclone';
+use Algorithm::Combinatorics 'combinations';
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
@@ -132,15 +133,16 @@ sub solve_part_two {
 						my $frags_contains_inter = grep { volumes_equal($_, $inter) } @frags;
 						
 						# Sanity check -- do the # cubes of the fragments equal the original
+						my $orig_count = count_cubes_in_volume($core_vol);
 						my $sum_frag_counts = 0;
 						for my $f (@frags) {
 							$sum_frag_counts += count_cubes_in_volume( $f );
 						}
-						my $check_counts = count_cubes_in_volume($core_vol) == $sum_frag_counts;
+						my $check_counts = ($orig_count == $sum_frag_counts);
 						
 						if (!$check_counts or !$frags_contains_inter) {
 							# Failed sanity checks
-							say "Check counts: $check_counts";
+							say "Check counts: $orig_count == $sum_frag_counts";
 							say "Intersection in fragments: $frags_contains_inter";
 							print Dumper($vol, $core_vol, $inter);
 							die;
@@ -160,6 +162,16 @@ sub solve_part_two {
 		push( @core_volumes, $vol ) if $instr->{'on'};
 	}
 	
+	# Another sanity check
+	my $iter = combinations(\@core_volumes, 2);
+	while (my $combo = $iter->next) {
+		if (volumes_overlap($combo->[0], $combo->[1])) {
+			print_volume($combo->[0]);
+			print_volume($combo->[1]);
+			die;
+		}
+	}
+	
 	my $lit_count = $init_cube_count;
 	for my $vol (@core_volumes) {
 		$lit_count += count_cubes_in_volume($vol);
@@ -171,7 +183,6 @@ sub solve_part_two {
 sub instruction_is_init {
 	my $i_ref = shift;
 
-	#print Dumper($i_ref);
 	return abs($i_ref->{'vol'}{'xmin'}) <= 50 &&
 			abs($i_ref->{'vol'}{'xmax'}) <= 50 &&
 			abs($i_ref->{'vol'}{'ymin'}) <= 50 &&
@@ -244,51 +255,54 @@ sub intersect_volumes {
 sub count_cubes_in_volume {
 	my $vol = shift;
 	
-	my $dx = $vol->{'xmax'} - $vol->{'xmin'};
-	my $dy = $vol->{'xmax'} - $vol->{'xmin'};
-	my $dz = $vol->{'xmax'} - $vol->{'xmin'};
+	my $dx = $vol->{'xmax'} - $vol->{'xmin'} + 1;
+	my $dy = $vol->{'ymax'} - $vol->{'ymin'} + 1;
+	my $dz = $vol->{'zmax'} - $vol->{'zmin'} + 1;
 	
 	return $dx * $dy * $dz;
 }
 
 sub split_volume {
 	my ($vol, $other) = @_;
+# 	say "Cleaving:";
+# 	print_volume($vol);
+# 	say "With other:";
+# 	print_volume($other);
+
 	my @frags = ($vol);
 	my @cleave_results;
 	
-	for my $frag (@frags) {
-		my @temp = cleave_volume_at_x($frag, $other->{'xmin'}, 0);
-		push(@cleave_results, @temp);
-		print Dumper(\@temp, \@cleave_results);
-	}
-	@frags = dclone(\@cleave_results);
+	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_x($frag, $other->{'xmin'}, 0)); }
+	@frags = @{dclone(\@cleave_results)};
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_x($frag, $other->{'xmax'}, 1)); }
-	@frags = dclone(\@cleave_results);
+	@frags = @{dclone(\@cleave_results)};
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_y($frag, $other->{'ymin'}, 0)); }
-	@frags = dclone(\@cleave_results);
+	@frags = @{dclone(\@cleave_results)};
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_y($frag, $other->{'ymax'}, 1)); }
-	@frags = dclone(\@cleave_results);
+	@frags = @{dclone(\@cleave_results)};
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_z($frag, $other->{'zmin'}, 0)); }
-	@frags = dclone(\@cleave_results);
+	@frags = @{dclone(\@cleave_results)};
 	@cleave_results = ();
 	for my $frag (@frags) { push(@cleave_results, cleave_volume_at_z($frag, $other->{'zmax'}, 1)); }
 
+# 	die;
 	return @cleave_results;
 }
 
 sub cleave_volume_at_x {
 	my ($vol, $value, $is_greedy) = @_;
 	
-	print Dumper( $vol, $value );
 	my $min = $vol->{'xmin'};
 	my $max = $vol->{'xmax'};
 	
 	my $split1 = $is_greedy ? $value : $value-1;
 	my $split2 = $is_greedy ? $value+1 : $value;
+	
+	if ($split1 <= $min or $split2 >= $max) { return ($vol); }
 	
 	my $v1 = { 'xmin' => $min, 			 'xmax' => $split1,
 			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'},
@@ -297,6 +311,13 @@ sub cleave_volume_at_x {
 			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'},
 			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
 	
+# 	say "Cleaved at X=$value";
+# 	print_volume($vol);
+# 	say "Results:";
+# 	print_volume($v1);
+# 	print_volume($v2);
+	
+	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
 }
 
@@ -309,6 +330,8 @@ sub cleave_volume_at_y {
 	my $split1 = $is_greedy ? $value : $value-1;
 	my $split2 = $is_greedy ? $value+1 : $value;
 	
+	if ($split1 <= $min or $split2 >= $max) { return ($vol); }
+	
 	my $v1 = { 'ymin' => $min, 			 'ymax' => $split1,
 			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
 			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
@@ -316,17 +339,24 @@ sub cleave_volume_at_y {
 			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
 			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
 	
+# 	say "Cleaved at Y=$value";
+# 	print_volume($vol);
+# 	say "Results:";
+# 	print_volume($v1);
+# 	print_volume($v2);
+	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
 }
 
 sub cleave_volume_at_z {
 	my ($vol, $value, $is_greedy) = @_;
-	
 	my $min = $vol->{'zmin'};
 	my $max = $vol->{'zmax'};
 	
 	my $split1 = $is_greedy ? $value : $value-1;
 	my $split2 = $is_greedy ? $value+1 : $value;
+	
+	if ($split1 <= $min or $split2 >= $max) { return ($vol); }
 	
 	my $v1 = { 'zmin' => $min, 			 'zmax' => $split1,
 			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
@@ -335,5 +365,22 @@ sub cleave_volume_at_z {
 			   'xmin' => $vol->{'xmin'}, 'xmax' => $vol->{'xmax'},
 			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'} };
 	
+# 	say "Cleaved at Z=$value";
+# 	print_volume($vol);
+# 	say "Results:";
+# 	print_volume($v1);
+# 	print_volume($v2);	
+	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
+}
+
+sub print_volume {
+	my $vol = shift;
+	
+	say "Volume: " . count_cubes_in_volume($vol);
+	say "\t\t$vol->{'ymax'}";
+	say "\t\t\t$vol->{'zmax'}";
+	say "$vol->{'xmin'}\t\t\t$vol->{'xmax'}";
+	say "\t$vol->{'zmin'}";
+	say "\t\t$vol->{'ymin'}";
 }
