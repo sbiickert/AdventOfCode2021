@@ -5,6 +5,7 @@ use autodie;
 use Data::Dumper;
 use Storable 'dclone';
 use Algorithm::Combinatorics 'combinations';
+#use bignum;
 
 my $INPUT_PATH = '../AdventOfCode2021/Input Files';
 
@@ -149,7 +150,17 @@ sub solve_part_two {
 						}
 						
 						for my $f (@frags) {
-							push(@core_volumes, $f) if !volumes_equal($f, $inter);
+							if (!volumes_equal($f, $inter)) {
+								if (volumes_overlap($vol, $f)) {
+									say "vol, inter, fragment:";
+									print_volumes($vol, $inter, $f);
+									die;
+								}
+								push(@core_volumes, $f);
+							}
+							else {
+								say "-" . count_cubes_in_volume($inter);
+							}
 						}
 					}
 					
@@ -159,20 +170,21 @@ sub solve_part_two {
 			}
 		}
 		
-		push( @core_volumes, $vol ) if $instr->{'on'};
+		if ($instr->{'on'}) {
+			push( @core_volumes, $vol );
+		}
 	}
 	
 	# Another sanity check
 	my $iter = combinations(\@core_volumes, 2);
 	while (my $combo = $iter->next) {
 		if (volumes_overlap($combo->[0], $combo->[1])) {
-			print_volume($combo->[0]);
-			print_volume($combo->[1]);
+			print_volumes($combo->[0], $combo->[1]);
 			die;
 		}
 	}
 	
-	my $lit_count = $init_cube_count;
+	my $lit_count = -$init_cube_count;
 	for my $vol (@core_volumes) {
 		$lit_count += count_cubes_in_volume($vol);
 	}
@@ -205,14 +217,17 @@ sub volumes_equal {
 sub volumes_overlap {
 	my ($v1, $v2) = @_;
 	
-	my $x_overlap = is_number_between($v1->{'xmin'}, $v2->{'xmin'}, $v2->{'xmax'}) ||
-					is_number_between($v1->{'xmax'}, $v2->{'xmin'}, $v2->{'xmax'});
-	my $y_overlap = is_number_between($v1->{'ymin'}, $v2->{'ymin'}, $v2->{'ymax'}) ||
-					is_number_between($v1->{'ymax'}, $v2->{'ymin'}, $v2->{'ymax'});
-	my $z_overlap = is_number_between($v1->{'zmin'}, $v2->{'zmin'}, $v2->{'zmax'}) ||
-					is_number_between($v1->{'zmax'}, $v2->{'zmin'}, $v2->{'zmax'});
-	
+	my $x_overlap = ranges_overlap($v1->{'xmin'}, $v1->{'xmax'}, $v2->{'xmin'}, $v2->{'xmax'});
+	my $y_overlap = ranges_overlap($v1->{'ymin'}, $v1->{'ymax'}, $v2->{'ymin'}, $v2->{'ymax'});
+	my $z_overlap = ranges_overlap($v1->{'zmin'}, $v1->{'zmax'}, $v2->{'zmin'}, $v2->{'zmax'});
+
 	return $x_overlap && $y_overlap && $z_overlap;
+}
+
+sub ranges_overlap {
+	my ($r1min, $r1max, $r2min, $r2max) = @_;
+	return is_number_between($r1min, $r2min, $r2max) || is_number_between($r1max, $r2min, $r2max) || 
+		   is_number_between($r2min, $r1min, $r1max) || is_number_between($r2max, $r1min, $r1max);
 }
 
 sub volume_contains {
@@ -265,9 +280,9 @@ sub count_cubes_in_volume {
 sub split_volume {
 	my ($vol, $other) = @_;
 # 	say "Cleaving:";
-# 	print_volume($vol);
+# 	print_volumes($vol);
 # 	say "With other:";
-# 	print_volume($other);
+# 	print_volumes($other);
 
 	my @frags = ($vol);
 	my @cleave_results;
@@ -312,10 +327,9 @@ sub cleave_volume_at_x {
 			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
 	
 # 	say "Cleaved at X=$value";
-# 	print_volume($vol);
+# 	print_volumes($vol);
 # 	say "Results:";
-# 	print_volume($v1);
-# 	print_volume($v2);
+# 	print_volumes($v1,$v2);
 	
 	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
@@ -340,10 +354,9 @@ sub cleave_volume_at_y {
 			   'zmin' => $vol->{'zmin'}, 'zmax' => $vol->{'zmax'} };
 	
 # 	say "Cleaved at Y=$value";
-# 	print_volume($vol);
+# 	print_volumes($vol);
 # 	say "Results:";
-# 	print_volume($v1);
-# 	print_volume($v2);
+# 	print_volumes($v1,$v2);
 	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
 }
@@ -366,21 +379,20 @@ sub cleave_volume_at_z {
 			   'ymin' => $vol->{'ymin'}, 'ymax' => $vol->{'ymax'} };
 	
 # 	say "Cleaved at Z=$value";
-# 	print_volume($vol);
+# 	print_volumes($vol);
 # 	say "Results:";
-# 	print_volume($v1);
-# 	print_volume($v2);	
+# 	print_volumes($v1,$v2);
 	count_cubes_in_volume($vol) == count_cubes_in_volume($v1) + count_cubes_in_volume($v2) or die;	
 	return ($v1, $v2);
 }
 
-sub print_volume {
-	my $vol = shift;
-	
-	say "Volume: " . count_cubes_in_volume($vol);
-	say "\t\t$vol->{'ymax'}";
-	say "\t\t\t$vol->{'zmax'}";
-	say "$vol->{'xmin'}\t\t\t$vol->{'xmax'}";
-	say "\t$vol->{'zmin'}";
-	say "\t\t$vol->{'ymin'}";
+sub print_volumes {
+	for my $vol (@_) {
+		say "Volume: " . count_cubes_in_volume($vol);
+		say "\t\t$vol->{'ymax'}";
+		say "\t\t\t$vol->{'zmax'}";
+		say "$vol->{'xmin'}\t\t\t$vol->{'xmax'}";
+		say "\t$vol->{'zmin'}";
+		say "\t\t$vol->{'ymin'}";
+	}
 }
