@@ -70,43 +70,98 @@ sub make_moves {
 	
 	my @next_moves;
 	my @legal_moves = find_legal_moves(\%current);
+	
+	#print Dumper(\@legal_moves);
+	for my $legal_move (sort { $a->{'COST'} <=> $b->{'COST'} } @legal_moves) {
+		my $enc = encode_burrow($legal_move);
+		say $legal_move->{'COST'};
+	}
 }
 
 sub find_legal_moves {
 	my %current = %{ $_[0] };
 	
+	my @moves;
+	
 	my @locs = find_occupant_locations(\%current);
-	say "Occupants are at " . join(' ', @locs);
+	#say "Occupants are at " . join(' ', @locs);
 	for my $loc (@locs) {
 		my $room = substr($loc, 0, 1);
 		my $index = substr($loc, 1, 1);
 		my $mover = $current{$room}[$index];
-		say "$room $index -> $mover";
+		#say "$room $index -> $mover";
 		
-		my @legal_destinations;
+		my %legal_destinations;
+		
 		if ($room eq 'N') {
 			# hallway
 			if (! grep { $_ ne '' and $_ ne $mover } @{ $current{$room} }) {
 				# there are no 'foreigners' in the destination room
 				for (my $i = $ROOM_SIZE-1; $i >= 0; $i--) {
-					if ($current{$room}[$index] eq '') {
+					if ($current{$room}[$i] eq '') {
 						# this is the deepest empty slot in the room. Can navigate to it?
-						my @path = find_path(\%current, $loc, "$room$index");
-						
-						
-						
-						
-						
-						 
+						my @traverse = find_traverse(\%current, $loc, "$room$i");
+						if (@traverse) {
+							$legal_destinations{"$room$i"} = \@traverse;
+							last;
+						}
 					}
 				}
 			}
 		}
 		else {
 			# room
+			my $should_leave_room = 0;
+			if ($room ne $mover) {
+				# this amphipod is in the wrong room
+				$should_leave_room = 1;
+			}
+			else {
+				# this amphipod is in the right room. Is it blocking someone?
+				for (my $i = $index+1; $i < $ROOM_SIZE; $i++) {
+					if ($current{$room}[$i] ne $room) {
+						$should_leave_room = 1;
+					}
+				}
+			}
+			if ($should_leave_room) {
+				# Find all reachable positions in the hall
+				for my $i (0..6) {
+					my @traverse = find_traverse(\%current, $loc, "N$i");
+					if (@traverse) {
+						$legal_destinations{"N$i"} = \@traverse;
+					}
+				}
+			}
+		}
 		
+		for my $dest (sort keys %legal_destinations) {
+			#say "$mover can move from $loc to $dest";
+			my %new_state = make_move(\%current, $loc, $dest, $legal_destinations{$dest});
+			push(@moves, \%new_state);
 		}
 	}
+
+	return @moves;
+}
+
+sub make_move {
+	my ($b_ref, $from, $to, $tr_ref) = @_;
+	my @traverse = @$tr_ref;
+	
+	my %new_burrow = %{ dclone($b_ref) };
+	my $mover = get_at_loc(\%new_burrow, $from);
+	set_at_loc(\%new_burrow, $to, $mover);
+	set_at_loc(\%new_burrow, $from, '');
+	
+	my $cost = 0;
+	for my $link (@traverse) {
+		$cost += $LINK{$link} * $COST{$mover};
+	}
+	
+	$new_burrow{'COST'} = $cost;
+	
+	return %new_burrow;
 }
 
 sub find_occupant_locations {
@@ -123,10 +178,24 @@ sub find_occupant_locations {
 	return @locations;
 }
 
-sub find_path {
+sub find_traverse {
 	my ($b_ref, $from, $to) = @_;
 	my %burrow = %$b_ref;
- @{ $PATH{} };	
+	
+	my @traverse;
+	
+ 	my @path = @{ $PATH{"$from-$to"} };
+ 	for my $i (0..$#path-1) {
+ 		my $here = $path[$i];
+ 		my $next = $path[$i+1];
+ 		
+ 		# check that $next is empty
+ 		return () if get_at_loc($b_ref, $next) ne '';
+ 		
+ 		push(@traverse, "$here-$next");
+ 	}
+ 	
+ 	return @traverse;
 }
 
 sub get_at_loc {
@@ -135,6 +204,14 @@ sub get_at_loc {
 	my $room = substr($loc, 0, 1);
 	my $index = substr($loc, 1, 1);
 	return $burrow{$room}[$index];
+}
+
+sub set_at_loc {
+	my ($b_ref, $loc, $value) = @_;
+	my %burrow = %$b_ref;
+	my $room = substr($loc, 0, 1);
+	my $index = substr($loc, 1, 1);
+	$burrow{$room}[$index] = $value;
 }
 
 sub init {
@@ -285,8 +362,10 @@ sub print_burrow {
 	my @hall = map { $_ eq '' ? '.' : $_ } @{$burrow{'N'}};
 	say '#' . $hall[0] . join('.', @hall[1..5]) . $hall[6] . '#';
 	for my $i (0..$ROOM_SIZE-1) {
-		say '###' . join('#', $burrow{'A'}[$i], $burrow{'B'}[$i],
-							 $burrow{'C'}[$i], $burrow{'D'}[$i]) . '###';
+		say '###' . join('#', ($burrow{'A'}[$i] ? $burrow{'A'}[$i] : '.'),
+							  ($burrow{'B'}[$i] ? $burrow{'B'}[$i] : '.'),
+							  ($burrow{'C'}[$i] ? $burrow{'C'}[$i] : '.'),
+							  ($burrow{'D'}[$i] ? $burrow{'D'}[$i] : '.')) . '###';
 	}
 	say '###' . '#' x 7 . '###';
 }
