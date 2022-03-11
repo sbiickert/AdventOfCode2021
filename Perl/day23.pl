@@ -37,7 +37,7 @@ my $ROOM_SIZE;
 my %STATES;
 my %VISITED;
 
-my $RUN_TYPE = 'test'; # 'test' or 'challenge'
+my $RUN_TYPE = 'challenge'; # 'test' or 'challenge'
 my $PART = 2;
 
 my %burrow = init($RUN_TYPE, $PART);
@@ -57,6 +57,7 @@ sub solve {
 	
 	$burrow{'COST'} = 0;
 	
+	print_burrow(\%burrow);
 	make_moves(\%burrow);
 	
 	return $STATES{$WINNING_STATE};
@@ -117,12 +118,12 @@ sub find_legal_moves {
 			# hallway
 			my $are_foreigners = 0;
 			for my $occ (@{ $current{$mover} }) {
-				$are_foreigners = $are_foreigners || ($occ ne '' && $occ ne $mover);
+				$are_foreigners = $are_foreigners || ($occ ne '.' && $occ ne $mover);
 			}
 			if (!$are_foreigners) {
 				# there are no 'foreigners' in the $mover's home room
 				for (my $i = $ROOM_SIZE-1; $i >= 0; $i--) {
-					if ($current{$mover}[$i] eq '') {
+					if ($current{$mover}[$i] eq '.') {
 						# this is the deepest empty slot in the room. Can navigate to it?
 						my @traverse = find_traverse(\%current, $loc, "$mover$i");
 						if (@traverse) {
@@ -177,10 +178,15 @@ sub make_move {
 	my %new_burrow = %{ dclone($b_ref) };
 	my $mover = get_at_loc(\%new_burrow, $from);
 	set_at_loc(\%new_burrow, $to, $mover);
-	set_at_loc(\%new_burrow, $from, '');
+	set_at_loc(\%new_burrow, $from, '.');
 	
 	my $cost = 0;
 	for my $link (@traverse) {
+		#say "$mover $link $LINK{$link}";
+		if (!defined $LINK{$link}) {
+			print Dumper(@traverse);
+			die;
+		}
 		$cost += $LINK{$link} * $COST{$mover};
 	}
 	
@@ -197,7 +203,7 @@ sub find_occupant_locations {
 	for my $r ('N', 'A'..'D') {
 		my @room = @{$burrow{$r}};
 		for my $i (0..$#room) {
-			push(@locations, "$r$i") if $room[$i] ne '';
+			push(@locations, "$r$i") if $room[$i] ne '.';
 		}
 	}
 	return @locations;
@@ -205,7 +211,6 @@ sub find_occupant_locations {
 
 sub find_traverse {
 	my ($b_ref, $from, $to) = @_;
-	my %burrow = %$b_ref;
 	
 	my @traverse;
 	
@@ -215,7 +220,7 @@ sub find_traverse {
  		my $next = $path[$i+1];
  		
  		# check that $next is empty
- 		return () if get_at_loc($b_ref, $next) ne '';
+ 		return () if get_at_loc($b_ref, $next) ne '.';
  		
  		push(@traverse, "$here-$next");
  	}
@@ -225,29 +230,27 @@ sub find_traverse {
 
 sub get_at_loc {
 	my ($b_ref, $loc) = @_;
-	my %burrow = %$b_ref;
 	my $room = substr($loc, 0, 1);
 	my $index = substr($loc, 1, 1);
-	return $burrow{$room}[$index];
+	return $b_ref->{$room}[$index];
 }
 
 sub set_at_loc {
 	my ($b_ref, $loc, $value) = @_;
-	my %burrow = %$b_ref;
 	my $room = substr($loc, 0, 1);
 	my $index = substr($loc, 1, 1);
-	$burrow{$room}[$index] = $value;
+	$b_ref->{$room}[$index] = $value;
 }
 
 sub init {
 	my ($type, $part) = @_;
 
 	my %burrow = (
-		N => ['','','','','','',''],
-		A => ['',''],
-		B => ['',''],
-		C => ['',''],
-		D => ['','']
+		N => ['.','.','.','.','.','.','.'],
+		A => ['.','.'],
+		B => ['.','.'],
+		C => ['.','.'],
+		D => ['.','.']
 	);
 	
 	my %winning_burrow = %{dclone(\%burrow)};
@@ -276,10 +279,10 @@ sub init {
 	else {
 		$ROOM_SIZE = 4;
 		build_links();
-		push(@{$burrow{'A'}}, 'D', 'D');
-		push(@{$burrow{'B'}}, 'C', 'B');
-		push(@{$burrow{'C'}}, 'B', 'A');
-		push(@{$burrow{'D'}}, 'A', 'C');
+		splice(@{$burrow{'A'}}, 1, 0, 'D', 'D');
+		splice(@{$burrow{'B'}}, 1, 0, 'C', 'B');
+		splice(@{$burrow{'C'}}, 1, 0, 'B', 'A');
+		splice(@{$burrow{'D'}}, 1, 0, 'A', 'C');
 		push(@{$winning_burrow{'A'}}, 'A', 'A');
 		push(@{$winning_burrow{'B'}}, 'B', 'B');
 		push(@{$winning_burrow{'C'}}, 'C', 'C');
@@ -349,20 +352,21 @@ sub build_paths {
 	
 	# Build the paths from the deeper points in the rooms
 	for my $letter ('A'..'D') {
+		# A0, B0, C0, D0
 		my $key_prefix = $letter . '0';
 		for my $key (keys %PATH) {
 			if ($key =~ m/^${key_prefix}(.+)/) {
-				for my $i (0..$ROOM_SIZE-2) {
-					my $j = $i+1;
+				my $temp = $PATH{$key};
+				#say "Building extended paths from $key: " . join(',', @{$temp});
+				for my $j (1..$ROOM_SIZE-1) {
 					my $new_key = "$letter$j$1";
-					my @temp = $PATH{$key};
-					#print Dumper(\@temp);
-					my $ref = dclone( \@temp );
+					my $ref = dclone( $temp );
 					my @path = @$ref;
-					unshift(@{$path[0]}, "$letter$j");
+					unshift(@path, "$letter$j");
+					#say "New $new_key: ";
 					#print Dumper(\@path);
-
-					$PATH{$new_key} = \@{$path[0]};
+					$PATH{$new_key} = \@path;
+					$temp = \@path;
 				}
 			}
 		}
@@ -384,7 +388,7 @@ sub print_burrow {
 	my %burrow = %$b_ref;
 	say "Cost: " . sprintf('%7d', $burrow{'COST'});
 	say '#' x 13;
-	my @hall = map { $_ eq '' ? '.' : $_ } @{$burrow{'N'}};
+	my @hall = map { $_ eq '.' ? '.' : $_ } @{$burrow{'N'}};
 	say '#' . $hall[0] . join('.', @hall[1..5]) . $hall[6] . '#';
 	for my $i (0..$ROOM_SIZE-1) {
 		say '###' . join('#', ($burrow{'A'}[$i] ? $burrow{'A'}[$i] : '.'),
@@ -396,12 +400,10 @@ sub print_burrow {
 }
 
 sub encode_burrow {
-	my %burrow = %{ $_[0] };
-	my @mapped = map { $_ eq '' ? '.' : $_ } @{$burrow{'N'}};
-	my $enc = 'N:' . join('-', @mapped) . ',';
+	my $b = shift;
+	my $enc = 'N:' . join('-', @{$b->{'N'}}) . ',';
 	for my $i ('A'..'D') {
-		@mapped = map { $_ eq '' ? '.' : $_ } @{$burrow{$i}};
-		$enc .= "$i:" . join('-', @mapped) . ',';
+		$enc .= "$i:" . join('-', @{$b->{$i}}) . ',';
 	}
 	return $enc;
 }
@@ -414,7 +416,7 @@ sub decode_burrow {
 		last if length($part) == 0;
 		my ($key, $content) = split(':', $part);
 		my @arr = split('-', $content);
-		my @mapped = map { $_ eq '.' ? '' : $_ } @arr;
+		my @mapped = map { $_ eq '.' ? '.' : $_ } @arr;
 		$burrow{$key} = \@mapped;
 	}
 	return %burrow;
