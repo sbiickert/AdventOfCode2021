@@ -38,7 +38,7 @@ my %STATES;
 my %VISITED;
 
 my $RUN_TYPE = 'test'; # 'test' or 'challenge'
-my $PART = 1;
+my $PART = 2;
 
 my %burrow = init($RUN_TYPE, $PART);
 
@@ -54,19 +54,25 @@ sub solve {
 	
 	my $enc = encode_burrow(\%burrow);
 	$STATES{$enc} = 0; # 0 cost
-	$VISITED{$enc} = 1;
 	
-	print_burrow(\%burrow, 0);
+	$burrow{'COST'} = 0;
 	
 	make_moves(\%burrow);
 	
-	return -99; $STATES{$WINNING_STATE};
+	return $STATES{$WINNING_STATE};
 }
 
 sub make_moves {
 	my %current = %{ $_[0] };
 	
-	return if encode_burrow(\%current) eq $WINNING_STATE;
+	#$VISITED{encode_burrow(\%current)} = 1;
+	
+	if (encode_burrow(\%current) eq $WINNING_STATE) {
+		print_burrow(\%current);
+		return;
+	}
+	
+	#say "# visited states: " . scalar(keys %VISITED) if scalar(keys %VISITED) % 100 == 0;
 	
 	my @next_moves;
 	my @legal_moves = find_legal_moves(\%current);
@@ -74,7 +80,21 @@ sub make_moves {
 	#print Dumper(\@legal_moves);
 	for my $legal_move (sort { $a->{'COST'} <=> $b->{'COST'} } @legal_moves) {
 		my $enc = encode_burrow($legal_move);
-		say $legal_move->{'COST'};
+		
+		if (exists($STATES{$enc})) {
+			if ($legal_move->{'COST'} < $STATES{$enc}) {
+				$STATES{$enc} = $legal_move->{'COST'};
+				push(@next_moves, $legal_move);
+			}
+		}
+		else {
+			$STATES{$enc} = $legal_move->{'COST'};
+			push(@next_moves, $legal_move);
+		}
+	}
+	
+	for my $next_move (@next_moves) {
+		make_moves($next_move);
 	}
 }
 
@@ -95,14 +115,18 @@ sub find_legal_moves {
 		
 		if ($room eq 'N') {
 			# hallway
-			if (! grep { $_ ne '' and $_ ne $mover } @{ $current{$room} }) {
-				# there are no 'foreigners' in the destination room
+			my $are_foreigners = 0;
+			for my $occ (@{ $current{$mover} }) {
+				$are_foreigners = $are_foreigners || ($occ ne '' && $occ ne $mover);
+			}
+			if (!$are_foreigners) {
+				# there are no 'foreigners' in the $mover's home room
 				for (my $i = $ROOM_SIZE-1; $i >= 0; $i--) {
-					if ($current{$room}[$i] eq '') {
+					if ($current{$mover}[$i] eq '') {
 						# this is the deepest empty slot in the room. Can navigate to it?
-						my @traverse = find_traverse(\%current, $loc, "$room$i");
+						my @traverse = find_traverse(\%current, $loc, "$mover$i");
 						if (@traverse) {
-							$legal_destinations{"$room$i"} = \@traverse;
+							$legal_destinations{"$mover$i"} = \@traverse;
 							last;
 						}
 					}
@@ -138,6 +162,7 @@ sub find_legal_moves {
 		for my $dest (sort keys %legal_destinations) {
 			#say "$mover can move from $loc to $dest";
 			my %new_state = make_move(\%current, $loc, $dest, $legal_destinations{$dest});
+			$new_state{'COST'} += $current{'COST'};
 			push(@moves, \%new_state);
 		}
 	}
@@ -355,9 +380,9 @@ sub build_paths {
 }
 
 sub print_burrow {
-	my ($b_ref, $cost) = @_;
+	my $b_ref = shift;
 	my %burrow = %$b_ref;
-	say "Cost: " . sprintf('%7d', $cost);
+	say "Cost: " . sprintf('%7d', $burrow{'COST'});
 	say '#' x 13;
 	my @hall = map { $_ eq '' ? '.' : $_ } @{$burrow{'N'}};
 	say '#' . $hall[0] . join('.', @hall[1..5]) . $hall[6] . '#';
