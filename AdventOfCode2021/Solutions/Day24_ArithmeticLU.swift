@@ -91,7 +91,7 @@ struct ArithmeticLogic:AoCSolution {
 			zs.append(w-A+z0)
 		}
 		
-		//print("backward(\(A),\(B),\(C),\(z2),\(w)) returned \(zs)")
+		print("backward(\(A),\(B),\(C),\(z2),\(w)) returned \(zs)")
 		return zs
 	}
 	
