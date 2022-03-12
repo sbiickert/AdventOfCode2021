@@ -48,3 +48,13 @@ Maybe when I've got some distance from these two days I'll be okay with it, but 
 ## Beyond The End
  
 Now I'm using AoC 2021 to work on some other languages. I think I've done as much Pascal as I want for now, so I've switched to refreshing my Perl skills. Five days done. At first my memory of how to properly dereference variables was so dim that every time was a struggle. But day05.pl didn't take nearly as long. Thanks [Impatient Perl](https://www.perl.org/books/impatient-perl/)!
+
+## And Another Completion
+
+I surprised myself: I have now completed all 25 days in Perl. It's surprising because:
+
+- I thought that some of the most complex puzzles would be insurmountable without having highly-structured and strongly-typed data.
+- I thought that not having a good debugger would sink me.
+- I thought that I would lose interest when it got hard.
+
+But I did it. I think my Perl skills are fully polished up now. If only I had something to apply them to. 
