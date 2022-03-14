@@ -182,11 +182,6 @@ sub make_move {
 	
 	my $cost = 0;
 	for my $link (@traverse) {
-		#say "$mover $link $LINK{$link}";
-		if (!defined $LINK{$link}) {
-			print Dumper(@traverse);
-			die;
-		}
 		$cost += $LINK{$link} * $COST{$mover};
 	}
 	
