@@ -51,6 +51,21 @@ package Line3D;
 	
 	has 'from' => 	(is => 'rw', isa => 'Point3D');
 	has 'to' => 	(is => 'rw', isa => 'Point3D');
+	
+	sub dx {
+		my $self = shift;
+		return $self->to->px - $self->from->px;
+	}
+	
+	sub dy {
+		my $self = shift;
+		return $self->to->py - $self->from->py;
+	}
+	
+	sub dz {
+		my $self = shift;
+		return $self->to->pz - $self->from->pz;
+	}
 
 	no Moose;
 __PACKAGE__->meta->make_immutable;
